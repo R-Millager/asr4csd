@@ -18,15 +18,31 @@ As always when starting work in Python, open **Anaconda Prompt** and activate th
 conda activate whisper_py
 ```
 
-## **2. Install and Launch Jupyter Notebook**
+## **2. Install pandas package.
 
-If you haven't installed Jupyter Notebook yet, do so with:
+If you haven't installed the pandas package yet, now is the time to do so.
+
+> `pandas` is a powerful Python library for data analysis and manipulation. It allows you to work with data in structured formats like tables, making it easy to filter, sort, calculate, and export data—similar to how you might work in Excel or R.
+
+Copy the following and run in Anaconda prompt:
+
+```sh
+pip install pandas
+```
+
+## **3. Install and Launch Jupyter Notebook**
+
+If you haven't installed Jupyter Notebook yet, now is the time to do so.
+
+> Jupyter Notebook is an interactive tool for writing and running Python code in your web browser. You can see immediate results while experimenting with code, and there is space to add notes.
+
+Copy the following and run in Anaconda prompt:
 
 ```sh
 pip install notebook
 ```
 
-To launch Jupyter Notebook:
+To launch Jupyter Notebook from Anaconda prompt:
 
 ```sh
 jupyter notebook
@@ -34,11 +50,20 @@ jupyter notebook
 
 This will open a browser window where you can create and run Python notebooks.
 
-## **3. Practice in Jupyter Notebook**
+## **4. Practice in Jupyter Notebook**
 
 Create a new notebook and try the following examples.
+Optional viewing: Here is [an Anaconda tutorial on Jupyter Notebook](https://freelearning.anaconda.cloud/get-started-with-anaconda/18571).
 
-### **A. Create and display a simple table**
+### **A. Open a new Jupyter Notebook**
+
+The newly opened Jupyter browser window will resemble a directory.
+Click New > Python 3 to create a blank notebook. By default, this will be named Untitled.ipynb.
+Open the new (Untitled) notebook.
+
+### **B. Create and display a simple table**
+
+In the blank command prompt of the notebook, copy the following:
 
 ```python
 import pandas as pd
@@ -48,7 +73,11 @@ df = pd.DataFrame(data)
 print(df)
 ```
 
-### **B. Work with lists and dictionaries**
+Then click the "run" (▶️) button to see a sample transcript given in a table format.
+
+### **C. Work with lists and dictionaries**
+
+Further experiment by copying the following code and running (▶️) in Jupyter.
 
 ```python
 # A dictionary of lists
@@ -68,7 +97,7 @@ for name in data["names"]:
 
 ---
 
-## **4. Navigating File Paths in Python**
+## **5. Navigating File Paths in Python**
 
 You can check or change your working directory using the `os` module:
 
@@ -87,7 +116,7 @@ print("New working directory:", os.getcwd())
 
 ---
 
-## **5. BONUS: Run a Python Script from the Command Line**
+## **6. BONUS: Run a Python Script from the Command Line**
 
 Open a text editor and paste the following code into a new file. Save it as `hello_script.py`.
 
