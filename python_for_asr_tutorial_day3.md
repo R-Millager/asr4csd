@@ -63,6 +63,8 @@ Open the new (Untitled) notebook.
 
 ### **B. Create and display a simple table**
 
+Within the new notebook, rename it "test1" (File > Rename). The .ipynb extension will be preserved).
+
 In the blank command prompt of the notebook, copy the following:
 
 ```python
@@ -77,29 +79,31 @@ Then click the "run" (▶️) button to see a sample transcript given in a table
 
 ### **C. Work with lists and dictionaries**
 
-Further experiment by copying the following code and running (▶️) in Jupyter.
+Further experiment with key Python concepts by copying the following code and running (▶️) in Jupyter.
 
 ```python
 # A dictionary of lists
 data = {
-    "names": ["Alice", "Bob", "Charlie"],
-    "ages": [30, 25, 35]
+    "names": ["Kirk", "Spock", "Bones"],
+    "ages": [32, 103, 39]
 }
 
 # Access values
 print(data["names"])        # Prints the list of names
-print(data["ages"][1])      # Prints 25
+print(data["ages"][2])      # Prints the third item (count from 0) in the list of ages
 
 # Loop over list
 for name in data["names"]:
-    print(f"Hello, {name}!")
+    print(f"Greetings, {name}!")
 ```
+
+Lists are sometimes referred to as vectors in R.
 
 ---
 
-## **5. Navigating File Paths in Python**
+## **5. Establishing a Working Directory**
 
-You can check or change your working directory using the `os` module:
+It is important to understand navigating file directories so that Python knows where to find files on your device. You can check or change your working directory using the `os` module:
 
 ```python
 import os
