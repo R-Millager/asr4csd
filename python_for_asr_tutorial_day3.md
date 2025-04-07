@@ -70,7 +70,7 @@ In the blank command prompt of the notebook, copy the following:
 ```python
 import pandas as pd
 
-data = {'Speaker': ['Speaker 1', 'Speaker 2'], 'Text': ['Hello!', 'How are you?']}
+data = {'Speaker': ['Speaker 1', 'Speaker 2'], 'Text': ['Good day to you, sir!', 'Fine day to you, ma'am.']}
 df = pd.DataFrame(data)
 print(df)
 ```
@@ -101,7 +101,7 @@ Lists are sometimes referred to as vectors in R.
 
 ---
 
-## **5. Establishing a Working Directory**
+## **5. Assigning Working Directories**
 
 It is important to understand navigating file directories so that Python knows where to find files on your device. You can check or change your working directory using the `os` module:
 
@@ -117,6 +117,7 @@ print("New working directory:", os.getcwd())
 ```
 
 > ⚠️ Before running this code, be sure you have selected the folder you want. On your machine, you should have a working folder with codes and test audio files for this project.
+> ⚠️ Also be sure to *always* use forward slashes (/) rather than backslashes (\) in your directory assignment.
 
 ---
 
@@ -125,7 +126,7 @@ print("New working directory:", os.getcwd())
 Open a text editor and paste the following code into a new file. Save it as `hello_script.py`.
 
 ```python
-print("Hello from a Python script!")
+print("This practice Python script says, 'Live long and prosper.'")
 ```
 
 Now, in Anaconda Prompt, navigate to the folder where the file is saved and run:
@@ -134,7 +135,7 @@ Now, in Anaconda Prompt, navigate to the folder where the file is saved and run:
 python hello_script.py
 ```
 
-You should see: `Hello from a Python script!`
+You should see: `This practice Python script says, 'Live long and prosper.'`
 
 ---
 
