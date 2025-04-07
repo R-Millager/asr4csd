@@ -121,15 +121,35 @@ print("New working directory:", os.getcwd())
 
 ---
 
-## **6. BONUS: Run a Python Script from the Command Line**
+## **6. Run a Python Script from the Command Line**
 
-Open a text editor and paste the following code into a new file. Save it as `hello_script.py`.
+> In the previous step, we practiced running Python commands directly within Jupyter Notebook using Python's os module. However, you can also run scripts directly from your Anaconda Prompt. This approach is particularly useful when you have a Python script saved as a .py file and want to quickly run or automate tasks without opening Jupyter Notebook. For example, you may find this useful later when batch processing multiple audio files or troubleshooting issues outside the notebook environment.
+
+### **A. Open a text editor and paste the following code into a new file into your working directory. Save it as `hello_script.py`.**
 
 ```python
 print("This practice Python script says, 'Live long and prosper.'")
 ```
 
-Now, in Anaconda Prompt, navigate to the folder where the file is saved and run:
+### **B. Confirm you have selected the correct working directory in Anaconda.**
+
+Before running Python scripts or commands directly from **Anaconda Prompt**, confirm your working directory is correct:
+
+1. **Check your current working directory:**  
+   In Anaconda Prompt, type:
+   ```sh
+   cd
+   ```
+
+2. **Change your working directory if needed:**
+
+   ```sh
+   cd C:\path\to\your\desired\directory
+   ```
+
+This should be where your 'hello_script.py' is saved.
+
+### **C. Run your custom script.**
 
 ```sh
 python hello_script.py
@@ -139,4 +159,4 @@ You should see: `This practice Python script says, 'Live long and prosper.'`
 
 ---
 
-Spend some time experimenting with these basics. Once you're comfortable, you'll be well-prepared for processing audio and transcripts using Whisper and Pyannote!
+Spend some time experimenting with these basics. In future steps, we'll be running more complex diarization and transcription processes with these tools.
