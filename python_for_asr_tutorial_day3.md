@@ -125,6 +125,8 @@ print("New working directory:", os.getcwd())
 
 > In the previous step, we practiced running Python commands directly within Jupyter Notebook using Python's os module. However, you can also run scripts directly from your Anaconda Prompt. This approach is particularly useful when you have a Python script saved as a .py file and want to quickly run or automate tasks without opening Jupyter Notebook. For example, you may find this useful later when batch processing multiple audio files or troubleshooting issues outside the notebook environment.
 
+Note that while Jupyter is running, your Anaconda Prompt becomes "busy." You may need to close Jupyter and/or press **CTRL + C** to free up the prompt again.
+
 ### **A. Open a text editor and paste the following code into a new file into your working directory. Save it as `hello_script.py`.**
 
 ```python
