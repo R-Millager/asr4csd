@@ -18,7 +18,26 @@
    python -c "import stable_whisper; print('Whisper installed successfully!')"
    ```
 
-## **2. Run a Test Transcription**
+## **2. Confirm Your Working Directory**
+Before running Whisper, it's important to confirm your current working directory (where Python will look for your audio file).
+
+In Anaconda Prompt, type the following command to display your current working directory:
+
+   ```sh
+  cd
+   ```
+
+This will display the folder you're currently working in (usually something like `C:\Users\YourName`).
+
+If you need to move to a different directory (for instance, a folder that contains your audio files), type:
+
+   ```sh
+  C:\Users\YourName\Documents\asr_example
+   ```
+
+Replace the example path above with the actual location of your audio files.
+
+## **3. Run a Test Transcription**
 
 1. Place an audio file (e.g., `test_audio.wav`) in the working directory.
 2. Run Whisper to generate a transcription:

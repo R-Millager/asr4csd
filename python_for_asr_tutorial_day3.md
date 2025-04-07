@@ -34,7 +34,7 @@ pip install pandas
 
 If you haven't installed Jupyter Notebook yet, now is the time to do so.
 
-> Jupyter Notebook is an interactive tool for writing and running Python code in your web browser. You can see immediate results while experimenting with code, and there is space to add notes.
+> `Jupyter Notebook` is an interactive tool for writing and running Python code in your web browser. You can see immediate results while experimenting with code, and there is space to add notes.
 
 Copy the following and run in Anaconda prompt:
 
@@ -58,7 +58,7 @@ Optional viewing: Here is [an Anaconda tutorial on Jupyter Notebook](https://fre
 ### **A. Open a new Jupyter Notebook**
 
 The newly opened Jupyter browser window will resemble a directory.
-Click New > Python 3 to create a blank notebook. By default, this will be named Untitled.ipynb.
+Click New > Python 3 to create a blank notebook. By default, this will be named `Untitled.ipynb`.
 Open the new (Untitled) notebook.
 
 ### **B. Create and display a simple table**
@@ -112,11 +112,11 @@ import os
 print(os.getcwd())
 
 # Change directory (adjust the path to your actual folder)
-os.chdir("C:/Users/YourName/Documents/asr")
+os.chdir("C:/Users/YourName/Documents/asr") #<- here is where you put your test folder!
 print("New working directory:", os.getcwd())
 ```
 
-> ⚠️ Be careful when changing directories. Ensure the folder path exists on your machine.
+> ⚠️ Before running this code, be sure you have selected the folder you want. On your machine, you should have a working folder with codes and test audio files for this project.
 
 ---
 
