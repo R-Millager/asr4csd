@@ -2,9 +2,9 @@
 
 ## **Overview**
 
-This guide will help you set up and run **Whisper** (for transcription) and **Pyannote** (for speaker diarization) on your Windows 11 device. Since these tools rely on Python and machine learning models, the main focus of this tutorial is to establish the necessary environment configured. Opportunities for additional learning and data science literacy are noted. We will use Anaconda as a user-friendly platform for running Python; although Anaconda is not strictly required for running Python on a PC, we recommend it for beginners. This tutorial was conceived as a 7-day learning process, with manageable goals for each day's topic, however it is a self-guided tutorial that can be taken at the reader's preferred pace.
+This guide will help you set up and run **Whisper** (for transcription) and **Pyannote** (for speaker diarization) on your Windows 11 device. Since these tools rely on Python and machine learning models, the main focus of this tutorial is to establish the necessary environment configured. Opportunities for additional learning and data science literacy are noted. We will use Anaconda as a user-friendly platform for running Python; although Anaconda is not strictly required for running Python on a PC, we recommend it for beginners. This tutorial was conceived as a day-by-day learning process, with manageable goals for each day's topic, however it is a self-guided tutorial that can be taken at the reader's preferred pace.
 
-### **Prerequisites**
+### **Prerequisites for This Tutorial**
 
 - Windows 11 PC (**NOTE TO SELF: ARE THERE MEMORY/PERFORMANCE REQUIREMENTS?)
 - Basic familiarity with R and RStudio (Python knowledge **not required**) **NOTE TO SELF: IS THIS REALLY A REQUIREMENT? AT A GLANCE I'M NOT SURE WE ACTUALLY USE R OR RSTUDIO, NEED TO CONFIRM**
@@ -21,7 +21,6 @@ This guide will help you set up and run **Whisper** (for transcription) and **Py
 
 | Day | Title | Key Topics |
 |-----|-------|------------|
-| Intro | [Overview & Setup](python_for_asr_tutorial_intro.md) | Installation goals, prerequisites, and learning path |
 | Day 1 | [Setting Up Your Environment](python_for_asr_tutorial_day1.md) | Anaconda, FFmpeg installation |
 | Day 2 | [Installing and Running Whisper](python_for_asr_tutorial_day2.md) | Installing Whisper, test transcription |
 | Day 3 | [Learning Basic Python for Whisper/Pyannote](python_for_asr_tutorial_day3.md) | Python basics, pandas, Jupyter |
