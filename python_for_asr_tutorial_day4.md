@@ -29,7 +29,7 @@
    ```sh
    conda activate whisper_py
    ```
-3. Install Pyannote:
+3. Install Pyannote. Note that this step can take quite a while when installing for the first time:
    ```sh
    pip install pyannote.audio
    ```
@@ -38,9 +38,17 @@
 
 ## **3. Run Pyannote for Speaker Diarization**
 
+> ⚠️ **One-time setup step required:** Before you can run the diarization model, you must manually accept its usage terms on Hugging Face:
+>
+> 1. Visit [https://huggingface.co/pyannote/speaker-diarization](https://huggingface.co/pyannote/speaker-diarization)
+> 2. Click **"Access repository"**
+> 3. Accept the terms and conditions
+>
+> Without this, the model download will fail, even if you have a valid token.
+
 1. Ensure your Hugging Face token is stored securely.
 
-2. Run diarization on an audio file:
+2. Run diarization on an audio file using the following code. Be sure to confirm your working directory and to update the code with accurate *audio file name* and *hugging face token* (from the previous step):
 
    ```sh
    python -c "from pyannote.audio import Pipeline; pipeline = Pipeline.from_pretrained('pyannote/speaker-diarization', use_auth_token='YOUR_TOKEN_HERE'); print(pipeline('test_audio.wav'))"
