@@ -8,6 +8,16 @@
 
 1. Create a **Hugging Face account** ([https://huggingface.co/](https://huggingface.co/)) if you don't already have one.
 2. Generate an **Access Token** by visiting [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens).
+
+   > **What is a token?** An access token is like a secure password that allows your Python scripts to connect to Hugging Face and use their hosted models. It ensures that only authorized users can access the models, helps Hugging Face track usage, and prevents abuse of their services. You’ll paste this token into your code when running Pyannote.
+
+   > **Recommended token settings:**
+   > - **Token Role**: `Read`
+   > - **Scopes/Permissions**:
+   >   - ✅ `Read` access to **Models`** (required)
+   >   - ✅ `Read` access to **Datasets`** *(optional — not required for Pyannote)*
+   > - ❌ No write, admin, or space access needed
+
 3. Save your token securely; you will need it to run Pyannote.
 
 ---
