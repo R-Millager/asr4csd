@@ -42,7 +42,7 @@
 >
 > 1. Visit [https://huggingface.co/pyannote/speaker-diarization](https://huggingface.co/pyannote/speaker-diarization)
 > 2. Click **"Access repository"**
-> 3. Accept the terms and conditions
+> 3. Accept the terms and conditions. You will need to enter some personal information (i.e., affiliation, website, data type).
 >
 > Without this, the model download will fail, even if you have a valid token.
 
