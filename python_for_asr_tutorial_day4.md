@@ -4,7 +4,7 @@
 
 ## **1. Set Up Hugging Face Authentication**
 
-> **What is Hugging Face?** Hugging Face is a platform that provides access to powerful pre-trained models for machine learning tasks like speech processing. Pyannote’s diarization models are hosted on Hugging Face, so you’ll need an account and access token to use them.
+> **What is Hugging Face?** Hugging Face is a platform that provides access to powerful pre-trained models for machine learning tasks like speech processing. Pyannote’s diarization models are hosted on Hugging Face, so you’ll need an account and access token to use them. In step 3 of this tutorial, you will grant permission for the use of several Hugging Face models that are used for Pyannote.
 
 1. Create a **Hugging Face account** ([https://huggingface.co/](https://huggingface.co/)) if you don't already have one.
 2. Generate an **Access Token** by visiting [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens).
@@ -38,13 +38,15 @@
 
 ## **3. Run Pyannote for Speaker Diarization**
 
-> ⚠️ **One-time setup step required:** Before you can run the diarization model, you must manually accept its usage terms on Hugging Face:
+> ⚠️ **One-time setup steps required:** Before you can run the diarization model, you must manually accept usage terms for two Hugging Face model repositories:
 >
 > 1. Visit [https://huggingface.co/pyannote/speaker-diarization](https://huggingface.co/pyannote/speaker-diarization)
 > 2. Click **"Access repository"**
 > 3. Accept the terms and conditions. You will need to enter some personal information (i.e., affiliation, website, data type).
+> 4. Then visit [https://huggingface.co/pyannote/segmentation](https://huggingface.co/pyannote/segmentation)
+> 5. Again, click **"Access repository"** and accept the terms
 >
-> Without this, the model download will fail, even if you have a valid token.
+> Without these steps, the model download will fail, even if you have a valid token.
 
 1. Ensure your Hugging Face token is stored securely.
 
