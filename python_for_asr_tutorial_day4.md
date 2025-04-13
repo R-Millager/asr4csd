@@ -69,3 +69,73 @@
 > 💡 **Server Note:** Pyannote models are computationally intensive. If your PC struggles, consider using university servers. **NOTE TO SELF - MAY NEED TO ADD MORE DETAIL HERE.**
 
 ---
+
+## **4. Save Pyannote Output in Jupyter Notebook**
+
+To use Pyannote results in later tutorials, you’ll want to **save the diarization output** as a `.json` or `.csv` file.
+
+The best way to do this is by using **Jupyter Notebook**, which lets you write and run Python code interactively.
+
+---
+
+### **Steps:**
+
+1. Make sure your conda environment is activated:
+   ```sh
+   conda activate whisper_py
+   ```
+
+2. Launch Jupyter Notebook:
+   ```sh
+   jupyter notebook
+   ```
+
+3. In the browser window that opens, create a new notebook (select the `whisper_py` environment if prompted).
+
+4. Paste and run the following code in a cell:
+
+#### **A. Run Pyannote and save output as `.json`**
+
+```python
+from pyannote.audio import Pipeline
+import json
+
+# Replace with your Hugging Face token and your audio file name
+token = "YOUR_TOKEN_HERE"
+audio_file = "test_audio.wav"
+
+pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization", use_auth_token=token)
+diarization = pipeline(audio_file)
+
+# Convert results to list of dictionaries
+segments = []
+for turn, _, speaker in diarization.itertracks(yield_label=True):
+    segments.append({
+        "start": turn.start,
+        "end": turn.end,
+        "speaker": speaker
+    })
+
+# Save to JSON
+with open("pyannote_output.json", "w") as f:
+    json.dump(segments, f, indent=2)
+
+print("✅ Pyannote output saved as 'pyannote_output.json'")
+```
+
+#### **B. (Optional) Also save as `.csv`**
+
+```python
+import csv
+
+with open("pyannote_output.csv", "w", newline="") as f:
+    writer = csv.DictWriter(f, fieldnames=["start", "end", "speaker"])
+    writer.writeheader()
+    writer.writerows(segments)
+
+print("✅ Pyannote output also saved as 'pyannote_output.csv'")
+```
+
+---
+
+> 📁 **Reminder:** You’ll use one of these output files in Day 5 to align speaker labels with Whisper transcripts.

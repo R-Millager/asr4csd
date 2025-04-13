@@ -48,3 +48,71 @@ Replace the example path above with the actual location of your audio files.
 
 ---
 
+## **4. Save Whisper Output in Jupyter Notebook**
+
+To use Whisper's transcription in later tutorials, you’ll want to save the output as a `.json` file.
+
+This is easiest to do using **Jupyter Notebook**, which allows you to view, test, and save results interactively.
+
+---
+
+### **Steps:**
+
+1. Make sure your environment is active:
+   ```sh
+   conda activate whisper_py
+   ```
+
+2. Launch Jupyter Notebook:
+   ```sh
+   jupyter notebook
+   ```
+
+3. In the browser window, create a new notebook.
+
+4. Paste and run the following code in a cell:
+
+#### **A. Save output as `.json`**
+
+```python
+import stable_whisper
+import json
+
+# Load the model (you can change 'base.en' to another model size if desired)
+model = stable_whisper.load_model("base.en")
+
+# Transcribe your audio file
+result = model.transcribe("test_audio.wav")
+
+# Save the full result (includes segments with start/end times)
+with open("whisper_output.json", "w") as f:
+    json.dump(result.to_dict(), f, indent=2)
+
+print("✅ Whisper output saved as 'whisper_output.json'")
+```
+
+---
+
+#### **B. (Optional) Also save segment data as `.csv`**
+
+```python
+import csv
+
+# Extract just the segments (start, end, text)
+segments = result.to_dict()["segments"]
+
+# Save segments to CSV
+with open("whisper_output.csv", "w", newline="", encoding="utf-8") as f:
+    writer = csv.DictWriter(f, fieldnames=["start", "end", "text"])
+    writer.writeheader()
+    for segment in segments:
+        writer.writerow({
+            "start": segment["start"],
+            "end": segment["end"],
+            "text": segment["text"].strip()
+        })
+
+print("✅ Whisper segment data saved as 'whisper_output.csv'")
+```
+
+> 📁 **Reminder:** These saved files will be used in Day 5 to align the transcript with speaker diarization from Pyannote.

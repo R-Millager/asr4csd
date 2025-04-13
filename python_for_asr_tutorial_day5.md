@@ -1,6 +1,6 @@
-# **Day 5: Analyzing Pyannote Results**
+# **Day 5: Analyzing Pyannote and Whisper Results**
 
-> **Why this is important:** Understanding Pyannote’s output will help you align diarization results with transcripts and ensure accuracy.
+> **Why this is important:** Understanding Pyannote’s output will help you align diarization results with transcripts and ensure accuracy. This tutorial will bring together skills you have learned from previous tutorials, comparing output from Whisper (Day 2), Pyannote (Day 4), and using Jupyter Notebook (Day 3) for visualization.
 
 ## **1. Interpreting Pyannote Output**
 
@@ -16,6 +16,75 @@ When you run Pyannote, it outputs **timestamps and speaker labels**, like this:
 This means **SPEAKER\_00** spoke from **0.0s to 2.5s**, and **SPEAKER\_01** spoke from **2.6s to 5.0s**.
 
 ## **2. Aligning Pyannote Results with Whisper Transcripts**
+
+To align Whisper’s transcript with Pyannote’s diarization results:
+
+- Compare **timestamps** between both outputs.
+- Assign speaker labels (`SPEAKER_00`, `SPEAKER_01`, etc.) to each transcript segment.
+- Save the aligned data in a CSV for easier inspection or analysis.
+
+---
+
+### **How to Create a CSV with Aligned Results**
+
+Here’s a basic method for aligning and exporting data:
+
+1. **Make sure you have output from both models**:
+   - Whisper’s transcript should contain **start and end times** for each utterance (e.g., in `whisper_output.json`).
+   - Pyannote’s diarization should include **start/end timestamps and speaker labels** (e.g., in `pyannote_output.json`).
+
+2. **Use a Jupyter Notebook and run the following code** to align the two datasets by matching each Whisper segment to the Pyannote speaker active during that time:
+
+```python
+import json
+import csv
+
+# Load Whisper and Pyannote outputs
+with open("whisper_output.json", "r") as f:
+    whisper_data = json.load(f)["segments"]
+
+with open("pyannote_output.json", "r") as f:
+    pyannote_data = json.load(f)
+
+aligned = []
+
+# Match each Whisper segment to the Pyannote speaker active at its start time
+for segment in whisper_data:
+    start = segment["start"]
+    end = segment["end"]
+    text = segment["text"]
+
+    # Find speaker label from Pyannote
+    speaker = "UNKNOWN"
+    for entry in pyannote_data:
+        if entry["start"] <= start < entry["end"]:
+            speaker = entry["speaker"]
+            break
+
+    aligned.append({
+        "start_time": start,
+        "end_time": end,
+        "speaker": speaker,
+        "text": text.strip()
+    })
+
+# Save to CSV
+with open("aligned_output.csv", "w", newline="", encoding="utf-8") as f:
+    writer = csv.DictWriter(f, fieldnames=["start_time", "end_time", "speaker", "text"])
+    writer.writeheader()
+    writer.writerows(aligned)
+
+print("✅ Aligned CSV saved as 'aligned_output.csv'")
+```
+
+3. **Check your output**: The CSV file will contain each utterance, its time range, assigned speaker, and the spoken text.
+
+| start_time | end_time | speaker     | text                          |
+|------------|----------|-------------|-------------------------------|
+| 0.5        | 2.2      | SPEAKER_00  | Hello, how are you doing?     |
+| 2.3        | 4.1      | SPEAKER_01  | I'm good, thanks for asking!  |
+
+> 📁 This aligned CSV will be useful for reviewing your data or preparing it for analysis in ELAN, CLAN, or other tools.
 
 To align Whisper’s transcript with Pyannote’s diarization results:
 
