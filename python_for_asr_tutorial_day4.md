@@ -139,3 +139,16 @@ print("✅ Pyannote output also saved as 'pyannote_output.csv'")
 ---
 
 > 📁 **Reminder:** You’ll use one of these output files in Day 5 to align speaker labels with Whisper transcripts.
+
+## **Troubleshooting Pyannote**
+
+### **Authentication error**
+- Double-check that your Hugging Face token is valid and used in the correct place.
+- Try logging in directly using the terminal:
+  ```sh
+  huggingface-cli login
+  ```
+
+### **Inaccurate speaker diarization**
+- Try increasing the model confidence threshold or using a higher-quality audio file.
+- You can also test Pyannote on a **smaller segment of your audio** before running the full file.

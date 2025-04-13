@@ -116,3 +116,15 @@ print("✅ Whisper segment data saved as 'whisper_output.csv'")
 ```
 
 > 📁 **Reminder:** These saved files will be used in Day 5 to align the transcript with speaker diarization from Pyannote.
+
+## **Troubleshooting Whisper**
+
+### **Whisper is running slowly**
+- Try using a **smaller model** such as `tiny`, `base`, or `small` instead of `large`.
+- Check if your CPU/GPU is being used efficiently. On Windows, use Task Manager; for GPU users, try `nvidia-smi`.
+
+### **No transcription output / only object reference appears**
+- Ensure you're accessing the `.text` attribute correctly:
+  ```python
+  print(result.text)
+  ```

@@ -1,37 +1,59 @@
-# **Day 6: Debugging Common Errors**
+# **Day 6: Running an Audio File - Full Workflow**
 
-> **Why this is important:** When working with machine learning models, errors are common. Learning how to debug them efficiently saves time and improves workflow.
+**Why this is important**: Now that you have completed the installations and learned the basics, this step serves as a quick-reference workflow for running Whisper and Pyannote on an audio file. Use this guide whenever you process new files.
 
-## **1. Common Whisper & Pyannote Issues and Fixes**
+## **1. Activate Your Environment**
 
-### **A. Whisper Issues**
+Before running anything, ensure your virtual environment is activated:
 
-- **Issue: Whisper is running slowly**
+```python
+conda activate whisper_py
+```
 
-  - **Fix:** Try using a **smaller model** (`tiny`, `base`, `small`) instead of `large`.
-  - **Fix:** Ensure your CPU/GPU is being used efficiently (check Task Manager or `nvidia-smi` for GPU monitoring).
+## **2. Set Your Working Directory**
 
-- **Issue: No transcription output / only object reference shown**
+Navigate to your working directory where your audio files are stored:
 
-  - **Fix:** Ensure you're calling `.text` when printing results:
-    ```sh
-    python -c "import stable_whisper; model = stable_whisper.load_model('base.en'); result = model.transcribe('test_audio.wav'); print(result.text)"
-    ```
+```python
+cd C:\Users\USERNAME\Documents\asr
+```
 
-### **B. Pyannote Issues**
+## **3. Run Whisper for Transcription**
 
-- **Issue: Authentication error when running Pyannote**
+Use Whisper to generate a transcription:
 
-  - **Fix:** Ensure your Hugging Face token is correctly stored and used.
-  - **Fix:** Manually log in to Hugging Face in your terminal:
-    ```sh
-    huggingface-cli login
-    ```
+```python
+python -c "import stable_whisper; model = stable_whisper.load_model('base.en'); result = model.transcribe('my_audio.wav'); print(result.text)"
+```
 
-- **Issue: Speaker diarization is inaccurate**
+*For larger or more accurate models, replace 'base.en' with 'medium.en' or 'large.en'.*
 
-  - **Fix:** Try **increasing the model confidence threshold** or using a **higher-quality audio file**.
-  - **Fix:** Run diarization on a smaller segment before processing long files.
+## **4. Run Pyannote for Speaker Diarization**
 
----
+Ensure you have a Hugging Face token set up before running:
+
+```python
+python -c "from pyannote.audio import Pipeline; pipeline = Pipeline.from_pretrained('pyannote/speaker-diarization', use_auth_token='YOUR_TOKEN_HERE'); print(pipeline('my_audio.wav'))"
+```
+
+## **5. Save and Export Results**
+
+To save results to a CSV file:
+
+```python
+import pandas as pd
+
+# Load model and transcribe
+test_audio = "my_audio.wav"
+model = stable_whisper.load_model('base.en')
+result = model.transcribe(test_audio)
+
+# Convert to DataFrame
+df = pd.DataFrame(result.segments)
+
+# Save to CSV
+df.to_csv("transcription_results.csv", index=False)
+
+print("Transcript saved to transcription_results.csv")
+```
 
