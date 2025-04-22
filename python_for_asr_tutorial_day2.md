@@ -1,6 +1,6 @@
-# **Day 2: Installing and Running Whisper**
+# **Part 2: Installing and Running Whisper**
 
-> **Why this is important:** Whisper is the core transcription tool you'll be using. Installing it properly and verifying that it runs correctly is essential before moving forward. At this stage, we will only aim to get Whisper running on your machine. Later, we will configure Whisper align with data that is timestamped and assigned to speakers. We'll also explore options for different model sizes and output formats. **NOTE TO SELF: MAKE SURE THIS LAST STUFF IS CORRECT**
+> **Why this is important:** Whisper is the core transcription tool you'll be using. Installing it properly and verifying that it runs correctly is essential before moving forward. At this stage, we will only aim to get Whisper running on your machine. Later, we will configure Whisper align with data that is timestamped and assigned to speakers. We'll also explore options for different model sizes and output formats.
 
 ## **1. Install Whisper**
 
@@ -32,7 +32,7 @@ This will display the folder you're currently working in (usually something like
 If you need to move to a different directory (for instance, a folder that contains your audio files), type:
 
    ```sh
-  C:\Users\YourName\Documents\asr_example
+  cd "C:\Users\YourName\Documents\asr_example"
    ```
 
 Replace the example path above with the actual location of your audio files.
