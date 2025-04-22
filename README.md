@@ -24,8 +24,8 @@ This guide will help you set up and run **Whisper** (for transcription) and **Py
 | Section | Title | Key Topics |
 |-----|-------|------------|
 | Section 1 | [Setting Up Your Environment](python_for_asr_tutorial_day1.md) | Anaconda, FFmpeg installation |
-| Section 2 | [Installing and Running Whisper](python_for_asr_tutorial_day2.md) | Installing Whisper, test transcription |
-| Section 3 | [Learning Basic Python for Whisper/Pyannote](python_for_asr_tutorial_day3.md) | Python basics, pandas, Jupyter |
+| Section 2 | [Learning Basic Python for Whisper/Pyannote](python_for_asr_tutorial_day2.md) | Python basics, pandas, Jupyter |
+| Section 3 | [Installing and Running Whisper](python_for_asr_tutorial_day3.md) | Installing Whisper, test transcription |
 | Section 4 | [Installing and Running Pyannote](python_for_asr_tutorial_day4.md) | Pyannote setup, Hugging Face token |
 | Section 5 | [Analyzing Pyannote Results](python_for_asr_tutorial_day5.md) | Diarization output, alignment |
 | Section 6 | [Running an Audio File - Full Workflow](python_for_asr_tutorial_day6.md) | Step-by-step review of the full process |
