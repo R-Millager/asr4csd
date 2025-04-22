@@ -1,8 +1,8 @@
-# **Day 5: Analyzing Pyannote and Whisper Results**
+# **Step 5: Analyzing Pyannote and Whisper Results**
 
 > **Why this is important:** Understanding Pyannote’s output will help you align diarization results with transcripts and ensure accuracy. This tutorial will bring together skills you have learned from previous tutorials, comparing output from Whisper (Part 3), Pyannote (Part 4), and using Jupyter Notebook (Part 2) for visualization.
 
-## **Getting Started: Use Jupyter Notebook for Day 5**
+## **Getting Started: Use Jupyter Notebook for Part 5**
 
 Day 5 brings together all the skills you've learned so far — importing model outputs, comparing timestamps, assigning speaker labels, and exporting aligned results.
 
@@ -92,12 +92,7 @@ with open("aligned_output.csv", "w", newline="", encoding="utf-8") as f:
 print("✅ Aligned CSV saved as 'aligned_output.csv'")
 ```
 
-3. **Check your output**: The CSV file will contain each utterance, its time range, assigned speaker, and the spoken text.
-
-| start_time | end_time | speaker     | text                          |
-|------------|----------|-------------|-------------------------------|
-| 0.5        | 2.2      | SPEAKER_00  | What happened to that data, Bones? |
-| 2.3        | 4.1      | SPEAKER_01  | Jim, I'm a doctor, not a data scientist! |
+3. **Check your output**: The CSV file will contain each word, its time range, assigned speaker, and the spoken text.
 
 > 📁 This aligned CSV will be useful for reviewing your data or preparing it for further analysis in ELAN, CLAN, or other tools for speech-language analysis.
 
@@ -107,18 +102,9 @@ To align Whisper’s transcript with Pyannote’s diarization results:
 - Assign speaker labels (`SPEAKER_00`, `SPEAKER_01`, etc.) to each transcript segment.
 - Optionally, save aligned data in a CSV (covered in later sections).
 
-## **3. Common Issues & Debugging**
+4. **View your output using `pandas`:**
 
-- If speaker labels seem **inaccurate**, try a **smaller audio segment**.
-- If timestamps don’t match, check if **both Whisper and Pyannote used the same audio file**.
-- If diarization runs too slowly, consider a **university server with GPU access**.
-
----
-
-## **4. (Optional) Inspect Aligned Output in a Table**
-
-Once your aligned CSV is saved, you can quickly view it using `pandas`:
-
+You can also view your output directly in Jupyter:
 ```python
 import pandas as pd
 
@@ -127,3 +113,9 @@ df.head()
 ```
 
 This is a helpful way to verify that speaker labels, timestamps, and transcript segments all aligned correctly.
+
+## **3. Common Issues & Debugging**
+
+- If speaker labels seem **inaccurate**, try a **smaller audio segment**.
+- If timestamps don’t match, check if **both Whisper and Pyannote used the same audio file**.
+- If diarization runs too slowly, consider a **university server with GPU access**.

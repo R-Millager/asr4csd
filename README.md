@@ -29,8 +29,8 @@ This guide will help you set up and run **Whisper** (for transcription) and **Py
 | Section 3 | [Installing and Running Whisper](python_for_asr_tutorial_day3.md) | Installing Whisper, test transcription |
 | Section 4 | [Installing and Running Pyannote](python_for_asr_tutorial_day4.md) | Pyannote setup, Hugging Face token |
 | Section 5 | [Analyzing Pyannote Results](python_for_asr_tutorial_day5.md) | Diarization output, alignment |
-| Section 6 | [Running an Audio File - Full Workflow](python_for_asr_tutorial_day6.md) | Step-by-step review of the full process |
-| Section 7 | [Options and Advanced Skills](python_for_asr_tutorial_day7.md) | Batch transcription, alternate models, future considerations |
+| Section 6 | [Running an Audio File - Full Workflow] | Step-by-step review of the full process - <span style="color:red">**THIS SECTION STILL IN PROGRESS.**</span> |
+| Section 7 | [Options and Advanced Skills] | Batch transcription, alternate models, future considerations - <span style="color:red">**THIS SECTION STILL IN PROGRESS.**</span> |
 
 ### Authorship disclosure
 

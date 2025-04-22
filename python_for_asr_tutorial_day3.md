@@ -42,7 +42,7 @@ Replace the example path above with the actual location of your audio files.
 1. Place an audio file (e.g., `test_audio.wav`) in the working directory.
 2. Run Whisper to generate a transcription:
    ```sh
-   python -c "import stable_whisper; model = stable_whisper.load_model('base.en'); result = model.transcribe('test_audio.wav'); print(result.text)"
+   python -c "import stable_whisper; model = stable_whisper.load_model('base.en'); result = model.transcribe('test_audio.wav', word_timestamps=True); print(result.text)"
    ```
 3. The transcript should be displayed in the terminal.
 
@@ -77,7 +77,7 @@ import json
 model = stable_whisper.load_model("base.en")
 
 # Transcribe your audio file
-result = model.transcribe("test_audio.wav")
+result = model.transcribe("test_audio.wav", word_timestamps=True)
 
 # Save the full result (includes segments with start/end times)
 with open("whisper_output.json", "w") as f:
@@ -109,8 +109,34 @@ with open("whisper_output.csv", "w", newline="", encoding="utf-8") as f:
 
 print("✅ Whisper segment data saved as 'whisper_output.csv'")
 ```
+#### **C. (Optional) Save word-level timestamps as `.csv`**
 
-> 📁 **Reminder:** These saved files will be used in Day 5 to align the transcript with speaker diarization from Pyannote.
+```python
+# Extract word-level timestamps
+segments = result.to_dict()["segments"]
+
+# Collect words across all segments
+words = []
+for segment in segments:
+    if "words" in segment:
+        words.extend(segment["words"])
+
+# Save word-level data to CSV
+import csv
+with open("whisper_words.csv", "w", newline="", encoding="utf-8") as f:
+    writer = csv.DictWriter(f, fieldnames=["start", "end", "word"])
+    writer.writeheader()
+    for word in words:
+        writer.writerow({
+            "start": word["start"],
+            "end": word["end"],
+            "word": word["text"].strip()
+        })
+
+print("✅ Word-level timestamps saved as 'whisper_words.csv'")
+```
+
+> 📁 **Reminder:** Some of these saved files will be used in Day 5 to align the transcript with speaker diarization from Pyannote.
 
 ## **Notes about Whisper performance**
 
