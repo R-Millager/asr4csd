@@ -1,6 +1,6 @@
-# **Part 2: Installing and Running Whisper**
+# **Part 3: Installing and Running Whisper**
 
-> **Why this is important:** Whisper is the core transcription tool you'll be using. Installing it properly and verifying that it runs correctly is essential before moving forward. At this stage, we will only aim to get Whisper running on your machine. Later, we will configure Whisper align with data that is timestamped and assigned to speakers. We'll also explore options for different model sizes and output formats.
+> **Why this is important:** Whisper is the core transcription tool you'll be using. Installing it properly and verifying that it runs correctly is essential before moving forward. At this stage, we will only aim to get the "base" model of Whisper running on your machine. Later, we will configure Whisper align with data that is timestamped and assigned to speakers. We'll also further explore options for different model sizes and output formats.
 
 ## **1. Install Whisper**
 
@@ -32,7 +32,7 @@ This will display the folder you're currently working in (usually something like
 If you need to move to a different directory (for instance, a folder that contains your audio files), type:
 
    ```sh
-  cd "C:\Users\YourName\Documents\asr_example"
+  cd "C:\Users\YourName\Documents\asr"
    ```
 
 Replace the example path above with the actual location of your audio files.
@@ -52,7 +52,7 @@ Replace the example path above with the actual location of your audio files.
 
 To use Whisper's transcription in later tutorials, you’ll want to save the output as a `.json` file.
 
-This is easiest to do using **Jupyter Notebook**, which allows you to view, test, and save results interactively.
+This is easiest to do using **Jupyter Notebook**, which we introduced in the previous tutorial.
 
 ---
 
@@ -112,14 +112,27 @@ print("✅ Whisper segment data saved as 'whisper_output.csv'")
 
 > 📁 **Reminder:** These saved files will be used in Day 5 to align the transcript with speaker diarization from Pyannote.
 
-## **Troubleshooting Whisper**
+## **Notes about Whisper performance**
 
-### **Whisper is running slowly**
-- Try using a **smaller model** such as `tiny`, `base`, or `small` instead of `large`.
-- Check if your CPU/GPU is being used efficiently. On Windows, use Task Manager; for GPU users, try `nvidia-smi`.
+By default, this tutorial uses the `base.en` model, which is a medium-sized model. If you experience slow performance, you can try switching to a smaller model to speed things up. Later on in the tutorial, we will explore options to improve performance with higher computing power and university servers.
 
-### **No transcription output / only object reference appears**
-- Ensure you're accessing the `.text` attribute correctly:
-  ```python
-  print(result.text)
-  ```
+To do this, change the model loading line in your code:
+
+```python
+model = stable_whisper.load_model("base.en")
+```
+
+to use a smaller model, such as:
+
+```python
+model = stable_whisper.load_model("tiny.en")
+```
+
+Here are a few common model options (from smallest to largest):
+
+- `tiny.en` – very fast, lower accuracy
+- `base.en` – balanced speed and accuracy (used in this tutorial)
+- `small.en` – slower but more accurate
+- `medium.en`, `large` – higher accuracy but much slower
+
+> 📝 The `.en` suffix loads English-only versions of the models, which are slightly faster and more memory-efficient than multilingual versions.

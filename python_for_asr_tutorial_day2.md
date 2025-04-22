@@ -101,7 +101,7 @@ Lists are sometimes referred to as vectors in R.
 
 ## **5. Assigning Working Directories**
 
-It is important to understand navigating file directories so that Python knows where to find files on your device. You can check or change your working directory using the `os` module:
+It is important to understand navigating file directories so that Python knows where to find files on your device. When inside of Jupyter notebook, you can check or change your working directory using the `os` module:
 
 ```python
 import os
@@ -144,10 +144,10 @@ Before running Python scripts or commands directly from **Anaconda Prompt**, con
 2. **Change your working directory if needed:**
 
    ```sh
-   cd C:\path\to\your\desired\directory
+   cd "C:/Users/YourName/Documents/asr" #<- here is where you put your desired directory!
    ```
 
-This should be where your 'hello_script.py' is saved.
+This directory should be where your 'hello_script.py' is saved.
 
 ### **C. Run your custom script.**
 

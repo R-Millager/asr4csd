@@ -130,3 +130,22 @@ You now have the tools to:
 ---
 
 # **End of Day 7**
+
+
+FROM a previous tutorial:
+
+
+### 💻 Check if your CPU or GPU is being used
+
+Whisper can run on either your CPU or GPU, but GPU processing is significantly faster. To check which is being used:
+
+- **On Windows:** Open **Task Manager** → go to the **Performance** tab. Look at **CPU** and **GPU** usage while Whisper is running.
+- **If you have an NVIDIA GPU:** In **Anaconda Prompt**, type:
+  ```sh
+  nvidia-smi
+  ```
+  This will show active GPU processes and confirm whether Python is using the GPU.
+
+> ⚠️ If you don't see activity, Whisper may be running on the CPU. GPU usage requires a CUDA-compatible version of PyTorch, which is not automatically installed with this tutorial.
+
+---
