@@ -2,8 +2,6 @@
 
 > **Why this is important:** Pyannote enables speaker diarization, allowing you to identify different speakers in an audio file with corresponding timestamps. This is critical for producing transcripts of conversations between two speakers. In later tutorial steps, we will align and merge Pyannote output with Whisper transcription to create a final transcript for analysis and coding.
 
-**NOTE TO SELF: NEED TO SORT OUT PYANNOTE VERSION, INDIVIDUAL TRAINING MODELS, ETC.**
-
 ## **1. Set Up Hugging Face Authentication**
 
 > **What is Hugging Face?** Hugging Face is a platform that provides access to powerful pre-trained models for machine learning tasks like speech processing. Pyannote’s diarization models are hosted on Hugging Face, so you’ll need an account and access token to use them. In step 3 of this tutorial, you will grant permission for the use of several Hugging Face models that are used for Pyannote.
@@ -20,7 +18,7 @@
    >   - ✅ `Read` access to **Datasets`** *(optional — not required for Pyannote)*
    > - ❌ No write, admin, or space access needed
 
-3. Save your token securely; you will need it to run Pyannote.
+3. Save your token **securely**; you will need it to run Pyannote.
 
 ---
 
@@ -66,7 +64,7 @@
 
 4. The output will display timestamps and speaker labels.
 
-> 💡 **Server Note:** Pyannote models are computationally intensive. If your PC struggles, consider using university servers. **NOTE TO SELF - MAY NEED TO ADD MORE DETAIL HERE.**
+> 💡 **Server Note:** Pyannote models are computationally intensive. If your PC struggles, you may need to use a device with higher computing power or university servers.
 
 ---
 
@@ -74,18 +72,13 @@
 
 To use Pyannote results in later tutorials, you’ll want to **save the diarization output** as a `.json` or `.csv` file.
 
-The best way to do this is by using **Jupyter Notebook**, which lets you write and run Python code interactively.
+The best way to do this is by using **Jupyter Notebook**.
 
 ---
 
 ### **Steps:**
 
-1. Make sure your conda environment is activated:
-   ```sh
-   conda activate whisper_py
-   ```
-
-2. Launch Jupyter Notebook:
+1. With your working working environment still active, launch Jupyter Notebook:
    ```sh
    jupyter notebook
    ```
