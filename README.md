@@ -6,7 +6,7 @@
 
 This guide will help you set up and run **Whisper** (for transcription) and **Pyannote** (for speaker diarization) on your Windows 11 device. Since these tools rely on Python and machine learning models, the main focus of this tutorial is to establish the necessary environment configured. Opportunities for additional learning and data science literacy are noted. We will use Anaconda as a user-friendly platform for running Python; although Anaconda is not strictly required for running Python on a PC, we recommend it for beginners. This tutorial was conceived as a day-by-day learning process, with manageable goals for each day's topic, however it is a self-guided tutorial that can be taken at the reader's preferred pace.
 
-Note: this tutorial reflects my goals to use transcription/diarization tools for research in communication sciences and disorders, with open-source and HIPAA-compliant pipelines.
+*Note: this tutorial reflects my goals to use transcription/diarization tools for research in communication sciences and disorders, with open-source and HIPAA-compliant pipelines.*
 
 ### **Prerequisites for This Tutorial**
 
@@ -21,12 +21,12 @@ Note: this tutorial reflects my goals to use transcription/diarization tools for
 
 ## Table of Contents
 
-| Day | Title | Key Topics |
+| Section | Title | Key Topics |
 |-----|-------|------------|
-| Day 1 | [Setting Up Your Environment](python_for_asr_tutorial_day1.md) | Anaconda, FFmpeg installation |
-| Day 2 | [Installing and Running Whisper](python_for_asr_tutorial_day2.md) | Installing Whisper, test transcription |
-| Day 3 | [Learning Basic Python for Whisper/Pyannote](python_for_asr_tutorial_day3.md) | Python basics, pandas, Jupyter |
-| Day 4 | [Installing and Running Pyannote](python_for_asr_tutorial_day4.md) | Pyannote setup, Hugging Face token |
-| Day 5 | [Analyzing Pyannote Results](python_for_asr_tutorial_day5.md) | Diarization output, alignment |
-| Day 6 | [Running an Audio File - Full Workflow](python_for_asr_tutorial_day6.md) | Step-by-step review of the full process |
-| Day 7 | [Options and Advanced Skills](python_for_asr_tutorial_day7.md) | Batch transcription, alternate models, future considerations |
+| Section 1 | [Setting Up Your Environment](python_for_asr_tutorial_day1.md) | Anaconda, FFmpeg installation |
+| Section 2 | [Installing and Running Whisper](python_for_asr_tutorial_day2.md) | Installing Whisper, test transcription |
+| Section 3 | [Learning Basic Python for Whisper/Pyannote](python_for_asr_tutorial_day3.md) | Python basics, pandas, Jupyter |
+| Section 4 | [Installing and Running Pyannote](python_for_asr_tutorial_day4.md) | Pyannote setup, Hugging Face token |
+| Section 5 | [Analyzing Pyannote Results](python_for_asr_tutorial_day5.md) | Diarization output, alignment |
+| Section 6 | [Running an Audio File - Full Workflow](python_for_asr_tutorial_day6.md) | Step-by-step review of the full process |
+| Section 7 | [Options and Advanced Skills](python_for_asr_tutorial_day7.md) | Batch transcription, alternate models, future considerations |
