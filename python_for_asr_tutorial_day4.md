@@ -1,4 +1,4 @@
-# **Day 4: Installing and Running Pyannote**
+# **Part 4: Installing and Running Pyannote**
 
 > **Why this is important:** Pyannote enables speaker diarization, allowing you to identify different speakers in an audio file with corresponding timestamps. This is critical for producing transcripts of conversations between two speakers. In later tutorial steps, we will align and merge Pyannote output with Whisper transcription to create a final transcript for analysis and coding.
 
@@ -83,9 +83,9 @@ The best way to do this is by using **Jupyter Notebook**.
    jupyter notebook
    ```
 
-3. In the browser window that opens, create a new notebook (select the `whisper_py` environment if prompted).
+2. In the browser window that opens, create a new notebook (select the `whisper_py` environment if prompted).
 
-4. Paste and run the following code in a cell:
+3. Paste and run the following code in a cell:
 
 #### **A. Run Pyannote and save output as `.json`**
 
@@ -94,8 +94,8 @@ from pyannote.audio import Pipeline
 import json
 
 # Replace with your Hugging Face token and your audio file name
-token = "YOUR_TOKEN_HERE"
-audio_file = "test_audio.wav"
+token = "YOUR_TOKEN_HERE" #<-- PASTE YOUR TOKEN HERE
+audio_file = "test_audio.wav" #<-- INPUT YOUR AUDIO FILENAME HERE
 
 pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization", use_auth_token=token)
 diarization = pipeline(audio_file)
@@ -131,7 +131,7 @@ print("✅ Pyannote output also saved as 'pyannote_output.csv'")
 
 ---
 
-> 📁 **Reminder:** You’ll use one of these output files in Day 5 to align speaker labels with Whisper transcripts.
+> 📁 **Reminder:** You’ll use one of these output files in Part 5 to align speaker labels with Whisper transcripts.
 
 ## **Troubleshooting Pyannote**
 

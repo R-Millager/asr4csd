@@ -1,4 +1,4 @@
-# **Day 2: Learning Basic Python for Whisper/Pyannote**
+# **Part 2: Learning Basic Python for Whisper/Pyannote**
 
 > **Why this is important:** Understanding basic Python operations will help you troubleshoot errors, modify transcription settings, and process data more effectively. Today will also introduce use of Jupyter Notebook as a workspace for coding.
 

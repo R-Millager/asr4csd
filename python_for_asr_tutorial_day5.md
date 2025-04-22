@@ -1,6 +1,6 @@
 # **Day 5: Analyzing Pyannote and Whisper Results**
 
-> **Why this is important:** Understanding Pyannote’s output will help you align diarization results with transcripts and ensure accuracy. This tutorial will bring together skills you have learned from previous tutorials, comparing output from Whisper (Day 2), Pyannote (Day 4), and using Jupyter Notebook (Day 3) for visualization.
+> **Why this is important:** Understanding Pyannote’s output will help you align diarization results with transcripts and ensure accuracy. This tutorial will bring together skills you have learned from previous tutorials, comparing output from Whisper (Part 3), Pyannote (Part 4), and using Jupyter Notebook (Part 2) for visualization.
 
 ## **Getting Started: Use Jupyter Notebook for Day 5**
 
@@ -16,7 +16,7 @@ The best way to complete these steps is with **Jupyter Notebook**, which lets yo
 conda activate whisper_py
 jupyter notebook
 ```
-Then open a new notebook and proceed with the steps below.
+Then **open a new notebook** and proceed with the steps below.
 
 ## **1. Interpreting Pyannote Output**
 When you run Pyannote, it outputs **timestamps and speaker labels**, like this:
@@ -96,10 +96,10 @@ print("✅ Aligned CSV saved as 'aligned_output.csv'")
 
 | start_time | end_time | speaker     | text                          |
 |------------|----------|-------------|-------------------------------|
-| 0.5        | 2.2      | SPEAKER_00  | Hello, how are you doing?     |
-| 2.3        | 4.1      | SPEAKER_01  | I'm good, thanks for asking!  |
+| 0.5        | 2.2      | SPEAKER_00  | What happened to that data, Bones? |
+| 2.3        | 4.1      | SPEAKER_01  | Jim, I'm a doctor, not a data scientist! |
 
-> 📁 This aligned CSV will be useful for reviewing your data or preparing it for analysis in ELAN, CLAN, or other tools.
+> 📁 This aligned CSV will be useful for reviewing your data or preparing it for further analysis in ELAN, CLAN, or other tools for speech-language analysis.
 
 To align Whisper’s transcript with Pyannote’s diarization results:
 
