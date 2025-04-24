@@ -1,12 +1,12 @@
 # **Part 8: Using Batchalign2 for CHAT Transcript Processing**
 
-> **Why this is important:** Batchalign2 is a powerful tool for processing CHAT transcripts alongside audio files. It provides functionalities like automatic speech recognition (ASR), forced alignment, and morphosyntactic analysis, which are essential for language sample analysis.
+> **Why this is important:** Batchalign2 is a tool for processing audio files for CHAT/CLAN end use. The tool is a part of the TalkBank project and is available for use via [this GitHub repository](https://github.com/TalkBank/batchalign2). I summarize the key points of Batchalign here in accord with my broader project to make these pipelines more accessible for clinicians and researchers, however *all credit* for this tool is due to Houjun Liu, Brian MacWhinney, and their colleagues with TalkBank. See [Liu et al. (2023)](https://pubs.asha.org/doi/10.1044/2023_JSLHR-22-00642) for a detailed description of Batchalign and its constituent processes and goals.
 
 ---
 
 ## **1. Set Up a New Conda Environment**
 
-We'll create a dedicated environment for Batchalign2 to manage dependencies effectively.
+Create a dedicated environment for Batchalign2 to manage dependencies effectively.
 
 1. Open **Anaconda Prompt**.
 2. Create and activate a new environment named `batchalign_py` with Python 3.11:
@@ -42,7 +42,7 @@ Batchalign2 operates on input and output directories. Let's set up these directo
    mkdir C:\Users\YourName\Documents\ba_output
    ```
 
-2. Place your `.cha` (CHAT transcript) and corresponding audio files (`.wav`, `.mp3`, or `.mp4`) into the `ba_input` directory.
+2. Place your sample `.wav` (CHAT transcript) and corresponding audio files (`.wav`, `.mp3`, or `.mp4`) into the `ba_input` directory.
 
 ---
 
