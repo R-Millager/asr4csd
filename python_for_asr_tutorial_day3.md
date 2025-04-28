@@ -1,6 +1,6 @@
 # **Part 3: Installing and Running Whisper**
 
-> **Why this is important:** Whisper is the core transcription tool you'll be using. Installing it properly and verifying that it runs correctly is essential before moving forward. At this stage, we will only aim to get the "base" model of Whisper running on your machine. Later, we will configure Whisper align with data that is timestamped and assigned to speakers. We'll also further explore options for different model sizes and output formats.
+> **Why this is important:** Whisper is the core transcription tool you'll be using. We are using Whisper_Stable, a slightly modified version [shown to have improved timestamp accuracy](https://pypi.org/project/stable-ts/). Installing it properly and verifying that it runs correctly is essential before moving forward. At this stage, we will only aim to get the "base" model of Whisper running on your machine. Later, we will configure Whisper align with data that is timestamped and assigned to speakers. We'll also further explore options for different model sizes and output formats.
 
 ## **1. Install Whisper**
 

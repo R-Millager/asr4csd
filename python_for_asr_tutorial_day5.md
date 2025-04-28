@@ -1,19 +1,20 @@
-# **Step 5: Analyzing Pyannote and Whisper Results**
+# **Part 5: Analyzing Pyannote and Whisper Results**
 
 > **Why this is important:** Understanding Pyannote’s output will help you align diarization results with transcripts and ensure accuracy. This tutorial will bring together skills you have learned from previous tutorials, comparing output from Whisper (Part 3), Pyannote (Part 4), and using Jupyter Notebook (Part 2) for visualization.
 
 ## **Getting Started: Use Jupyter Notebook for Part 5**
 
-Day 5 brings together all the skills you've learned so far — importing model outputs, comparing timestamps, assigning speaker labels, and exporting aligned results.
+Step 5 brings together all the skills you've learned so far — importing model outputs, comparing timestamps, assigning speaker labels, and exporting aligned results.
 
 The best way to complete these steps is with **Jupyter Notebook**, which lets you:
 - Inspect Whisper and Pyannote outputs side-by-side
 - Write and debug alignment code in steps
 - Export `.csv` or `.json` files for use in your final analysis
 
-> 🧠 **Before you begin**, activate your environment and launch Jupyter:
+> 🧠 **Before you begin**, activate your environment, confirm your working directory, and launch Jupyter:
 ```sh
 conda activate whisper_py
+cd C:\Users\YourName\Documents\ASR_Project
 jupyter notebook
 ```
 Then **open a new notebook** and proceed with the steps below.
