@@ -124,10 +124,9 @@ if DIARIZATION == True:
         use_auth_token=HUB_TOKEN
     )
 
-    # Send pipeline to GPU if available, otherwise CPU (personal computers)
-	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-pipeline.to(device)
-    pipeline.to(torch.device("cuda"))
+    # Dynamically select device (CPU or CUDA if available)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    pipeline.to(device)
 ```
 
 ## **2. Set Your Working Directory**
