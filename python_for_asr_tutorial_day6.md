@@ -82,7 +82,7 @@ This code will process everything in English (`.en`) and will use the base model
 
 ## **2. Select inputs and presets**
 
-The following code will ensure that necessary folders are ready for your transcription.
+The following code will ensure that necessary folders are ready for your transcription. You may also note that we have the option to select output by word or segment, and .csv or .txt.
 
 > - `AUDIO_FOLDER`: The folder where your `.wav` files will be located.
 > - `OUTPUT_FOLDER`: The folder where your transcription and diarization outputs will be saved.
@@ -96,7 +96,7 @@ import torch
 from pyannote.audio import Pipeline
 
 # --- Define Folder Paths ---
-AUDIO_FOLDER = "sample_audio_folder/"
+AUDIO_FOLDER = "raw_audio_folder/"
 OUTPUT_FOLDER = "transcription_output/"
 
 # --- Ensure Input and Output Folders Exist ---
@@ -129,31 +129,132 @@ if DIARIZATION == True:
     pipeline.to(device)
 ```
 
-## **2. Set Your Working Directory**
+## **3. Prepare audio file(s)
 
-Navigate to your working directory where your audio files are stored:
+Put one or more `.wav` files in `raw_audio_folder/` so they are ready to be processed.
 
-```python
-cd C:\Users\USERNAME\Documents\asr
-```
+## **3. RUN WHISPER AND PYANNOTE**
 
-## **3. Run Whisper for Transcription**
-
-Use Whisper to generate a transcription:
+This is the main event, in which you should be able to run all of the following code to batch transcribe your audio file(s):
 
 ```python
-python -c "import stable_whisper; model = stable_whisper.load_model('base.en'); result = model.transcribe('my_audio.wav'); print(result.text)"
+def is_overlap(start1, end1, start2, end2):
+    """
+    Check if two time intervals overlap.
+    
+    Args:
+        start1 (float): Start time of first interval.
+        end1 (float): End time of first interval.
+        start2 (float): Start time of second interval.
+        end2 (float): End time of second interval.
+        
+    Returns:
+        bool: True if intervals overlap, False otherwise.
+    """
+    return max(start1, start2) < min(end1, end2)
 ```
-
-*For larger or more accurate models, replace 'base.en' with 'medium.en' or 'large.en'.*
-
-## **4. Run Pyannote for Speaker Diarization**
-
-Ensure you have a Hugging Face token set up before running:
 
 ```python
-python -c "from pyannote.audio import Pipeline; pipeline = Pipeline.from_pretrained('pyannote/speaker-diarization', use_auth_token='YOUR_TOKEN_HERE'); print(pipeline('my_audio.wav'))"
+def diarize(audio_file_path):
+    """
+    Perform diarization on an audio file and return a DataFrame of speaker segments.
+
+    Args:
+        audio_file_path (str): Path to the audio file.
+        
+    Returns:
+        pd.DataFrame: DataFrame with 'start', 'end', and 'speaker' columns.
+    """
+    if not os.path.exists(audio_file_path):
+        raise FileNotFoundError(f"The audio file {audio_file_path} does not exist.")
+    
+    with ProgressHook() as hook:
+        diarization = pipeline(audio_file_path, hook=hook)
+    
+    diarization_list = [{
+        'start': segment.start,
+        'end': segment.end,
+        'speaker': list(track.values())[0]
+    } for segment, track in diarization._tracks.items()]
+    
+    diarization_df = pd.DataFrame(diarization_list)
+    
+    return diarization_df 
 ```
+
+```python
+def align_diarization_and_transcription(speaker_segs_df, df_segments):
+    """
+    Align diarization results with ASR transcription segments to assign a predominant speaker label.
+
+    Args:
+        speaker_segs_df (pd.DataFrame): Diarization output with 'start', 'end', 'speaker' columns.
+        df_segments (pd.DataFrame): Transcription segments with 'start', 'end' times.
+
+    Returns:
+        pd.DataFrame: Updated transcription DataFrame with a 'predominant_speaker' column.
+    """
+    if speaker_segs_df.empty:
+        raise ValueError("The speaker segments DataFrame is empty.")
+    if df_segments.empty:
+        raise ValueError("The transcription segments DataFrame is empty.")
+
+    labels = []
+    predominant_labels = []
+    max_overlaps = []
+    durations = []
+    all_overlaps = []
+    
+    # Note: For very large datasets (e.g., >5,000 segments),
+    # iterating with .iterrows() and .apply() may become slow.
+    # Consider using optimized overlap structures (e.g., interval trees) if needed.
+
+    for i, row in df_segments.iterrows():
+        
+        overlaps = speaker_segs_df.apply(
+            lambda x: (x['speaker'], min(row['end'], x['end']) - max(row['start'], x['start'])) 
+            if is_overlap(row['start'], row['end'], x['start'], x['end']) else (None, 0), 
+            axis=1
+        )
+        
+        overlaps = overlaps[overlaps.apply(lambda x: x[0] is not None)]
+        
+        overlapping_labels = overlaps.apply(lambda x: x[0])
+        overlapping_labels.reset_index(drop=True, inplace=True)
+        labels.append(" ".join(overlapping_labels))
+        
+        collapsed_dict = defaultdict(float)
+        
+        for item in overlaps:
+            key, value = item
+            collapsed_dict[key] += value
+        
+        collapsed_list = list(collapsed_dict.items())
+        non_empty_label_overlap = [item for item in collapsed_list if item[0] is not None]
+        collapsed_series = pd.Series(collapsed_list)
+        
+        overlap_times = collapsed_series.apply(lambda x: x[1])
+        overlap_labels = collapsed_series.apply(lambda x: x[0])
+        
+        overlap_times.reset_index(drop=True, inplace=True)
+        overlap_labels.reset_index(drop=True, inplace=True)
+        
+        if not overlap_times.empty:
+            predominant_label = overlap_labels.iloc[overlap_times.idxmax()]
+            predominant_labels.append(predominant_label)
+            max_overlap = overlap_times.iloc[overlap_times.idxmax()]
+            max_overlaps.append(max_overlap)
+            all_overlaps.append(non_empty_label_overlap)
+        else:
+            predominant_labels.append("")
+            max_overlaps.append("")
+            all_overlaps.append("")
+        
+    df_segments["predominant_speaker"] = predominant_labels
+
+    return df_segments
+```
+
 
 ## **5. Save and Export Results**
 
