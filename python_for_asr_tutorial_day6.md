@@ -4,6 +4,14 @@
 
 *Use this guide whenever you want to process new files with the pipeline we have introduced.*
 
+# **STILL DO DO FOR THIS TUTORIAL PAGE:**
+1. Upload a finished .ipbyn file in the Git to allow users who want to just jump right in to upload.
+2. Create a link within this tutorial as well as a jump to step 4.
+3. Edit/correct step 5 and below.
+4. Add future notes - lags, model sizes, batch processing, etc.
+5. On to BatchAlign and the rest of the tutorial!
+6. Send to Suma and Hannah to test drive? Send to Isa?
+
 # **Getting Started: Set Up Your Virtual Environment**
 
 As with the previous step, we will begin by setting up your workspace and Jupyter Notebook to run all subsequent code. We will also take care of installing a few extra packages to smooth out our pipeline.
@@ -133,7 +141,7 @@ if DIARIZATION == True:
 
 Put one or more `.wav` files in `raw_audio_folder/` so they are ready to be processed.
 
-## **3. RUN WHISPER AND PYANNOTE**
+## **4. RUN WHISPER AND PYANNOTE**
 
 This is the main event, in which you should be able to run all of the following code to batch transcribe your audio file(s):
 
@@ -255,8 +263,7 @@ def align_diarization_and_transcription(speaker_segs_df, df_segments):
     return df_segments
 ```
 
-
-## **5. Save and Export Results**
+## **5. Save and Export Results - NEED TO EDIT FROM HERE**
 
 To save results to a CSV file:
 
