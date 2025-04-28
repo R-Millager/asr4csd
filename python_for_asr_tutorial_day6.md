@@ -84,7 +84,7 @@ This code will process everything in English (`.en`) and will use the base model
 
 The following code will ensure that necessary folders are ready for your transcription.
 
-> - `AUDIO_FOLDER`: The folder where your `.wav` files are located.
+> - `AUDIO_FOLDER`: The folder where your `.wav` files will be located.
 > - `OUTPUT_FOLDER`: The folder where your transcription and diarization outputs will be saved.
 
 Copy the following and run in Jupyter:
@@ -124,7 +124,9 @@ if DIARIZATION == True:
         use_auth_token=HUB_TOKEN
     )
 
-    # Send pipeline to GPU
+    # Send pipeline to GPU if available, otherwise CPU (personal computers)
+	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+pipeline.to(device)
     pipeline.to(torch.device("cuda"))
 ```
 
