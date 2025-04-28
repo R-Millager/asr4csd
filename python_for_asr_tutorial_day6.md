@@ -70,27 +70,62 @@ This code will process everything in English (`.en`) and will use the base model
 > 
 > 🔍 For general English transcription with maximum accuracy, `large-v3` is the most powerful model — but it is multilingual by default.
 > 
-> Choose your model based on your needs for speed, size, and language support. See below for more details:
+> Choose your model based on your needs for speed, size, and language support. See below for rough details:
 
-| Model        | Size (parameters) | Relative Speed | Accuracy (English) | Notes |
-|:-------------|:------------------|:---------------|:-------------------|:------|
-| `tiny`       | 39M               | Very Fast       | Lower              | Good for quick drafts, mobile |
-| `tiny.en`    | 39M               | Very Fast       | Lower (optimized for English) | English only |
-| `base`       | 74M               | Fast            | Moderate           | Good baseline model |
-| `base.en`    | 74M               | Fast            | Moderate (better for English) | English only |
-| `small`      | 244M              | Moderate        | High               | Balanced speed and quality |
-| `small.en`   | 244M              | Moderate        | High (for English)  | English only |
-| `medium`     | 769M              | Slower          | Very High          | Good for multilingual tasks |
-| `medium.en`  | 769M              | Slower          | Very High (for English) | English only |
-| `large-v
-
+| Size   | Parameters | English-only model | Multilingual model | Required VRAM | Relative Speed |
+|:-------|:----------:|:------------------:|:------------------:|:-------------:|:--------------:|
+| tiny   | 39 M        | tiny.en             | tiny               | ~1 GB         | ~32x           |
+| base   | 74 M        | base.en             | base               | ~1 GB         | ~16x           |
+| small  | 244 M       | small.en            | small              | ~2 GB         | ~6x            |
+| medium | 769 M       | medium.en           | medium             | ~5 GB         | ~2x            |
+| large  | 1550 M      | N/A                 | large              | ~10 GB        | 1x             |
 
 ## **2. Select inputs and presets**
 
-Copy the following code into Jupyter and edit everything to reflect your files and device.
+The following code will ensure that necessary folders are ready for your transcription.
 
+> - `AUDIO_FOLDER`: The folder where your `.wav` files are located.
+> - `OUTPUT_FOLDER`: The folder where your transcription and diarization outputs will be saved.
+
+Copy the following and run in Jupyter:
 ```python
-conda activate whisper_py
+# --- Import Required Libraries ---
+import os
+import json
+import torch
+from pyannote.audio import Pipeline
+
+# --- Define Folder Paths ---
+AUDIO_FOLDER = "sample_audio_folder/"
+OUTPUT_FOLDER = "transcription_output/"
+
+# --- Ensure Input and Output Folders Exist ---
+os.makedirs(AUDIO_FOLDER, exist_ok=True)
+os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+
+# --- Set Processing Options ---
+DIARIZATION = True   # Options: True, False
+LEVEL = "WORD"       # Options: "WORD", "SEGMENT"
+EXPORT_AS = "CSV"    # Options: "CSV", "TXT"
+
+# --- Set Up Diarization Pipeline if Requested ---
+if DIARIZATION == True:
+    # Load HuggingFace token from config.json
+    if not os.path.exists('config.json'):
+        raise FileNotFoundError("config.json file not found. Please create it before running this script.")
+
+    with open('config.json', 'r') as config_file:
+        config = json.load(config_file)
+    HUB_TOKEN = config['huggingface']['token']
+
+    # Load pretrained diarization pipeline
+    pipeline = Pipeline.from_pretrained(
+        "pyannote/speaker-diarization-3.1",
+        use_auth_token=HUB_TOKEN
+    )
+
+    # Send pipeline to GPU
+    pipeline.to(torch.device("cuda"))
 ```
 
 ## **2. Set Your Working Directory**
