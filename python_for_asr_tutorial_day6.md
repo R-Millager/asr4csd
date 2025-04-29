@@ -21,8 +21,7 @@ As with the previous step, we will begin by setting up your workspace and Jupyte
 conda activate whisper_py
 
 cd C:\Users\YourName\Documents\asr
-pip install --upgrade jupyterlab notebook ipywidgets widgetsnbextension
-tqdm
+pip install --upgrade jupyterlab notebook ipywidgets widgetsnbextension tqdm
 jupyter notebook
 ```
 Then **open a new notebook** and proceed with the steps below.
@@ -170,18 +169,18 @@ for file_name in tqdm(os.listdir(AUDIO_FOLDER), desc="Processing files"):
         # 1. Transcribe with Whisper
         result = model.transcribe(audio_path, regroup=False, verbose=False)
 
-        # 2. Convert segments to DataFrame
-        df_segments = pd.DataFrame(result['segments'])
+# 2. Convert segments to DataFrame
+df_segments = pd.DataFrame(result.segments)
 
         # 3. (Optional) Perform diarization and align
         if DIARIZATION:
             speaker_segs_df = diarize(audio_path)
             df_segments = align_diarization_and_transcription(speaker_segs_df, df_segments)
 
-        # 4. Select export level
-        export_data = pd.DataFrame(result['words']) if LEVEL == "WORD" else df_segments
-        if DIARIZATION and LEVEL == "WORD":
-            export_data = align_diarization_and_transcription(speaker_segs_df, export_data)
+# 4. Select export level
+export_data = pd.DataFrame(result.words) if LEVEL == "WORD" else df_segments
+if DIARIZATION and LEVEL == "WORD":
+    export_data = align_diarization_and_transcription(speaker_segs_df, export_data)
 
         # 5. Save results
         base_filename = os.path.splitext(file_name)[0]
