@@ -136,11 +136,23 @@ def diarize(audio_file_path):
         raise FileNotFoundError(f"The audio file {audio_file_path} does not exist.")
     with ProgressHook() as hook:
         diarization = pipeline(audio_file_path, hook=hook, num_speakers=2)
-    diarization_list = [{
-        'start': segment.start,
-        'end': segment.end,
-        'speaker': list(track.values())[0]
-    } for segment, track in diarization._tracks.items()]
+
+    diarization_list = []
+    for segment, track in diarization._tracks.items():
+        try:
+            speaker = list(track.values())[0]
+            diarization_list.append({
+                'start': segment.start,
+                'end': segment.end,
+                'speaker': speaker
+            })
+        except Exception as e:
+            print(f"⚠️ Failed to parse segment {segment}: {e}")
+
+    if not diarization_list:
+        print(f"⚠️ No speaker tracks found in {audio_file_path}")
+        return pd.DataFrame(columns=['start', 'end', 'speaker'])
+
     return pd.DataFrame(diarization_list)
 ```
 
