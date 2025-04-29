@@ -137,7 +137,7 @@ if DIARIZATION == True:
     pipeline.to(device)
 ```
 
-## **3. Prepare audio file(s)
+## **3. Prepare audio file(s)**
 
 Put one or more `.wav` files in `raw_audio_folder/` so they are ready to be processed.
 
@@ -262,6 +262,52 @@ def align_diarization_and_transcription(speaker_segs_df, df_segments):
 
     return df_segments
 ```
+```python
+# --- MAIN PROCESSING LOOP ---
+for file_name in os.listdir(AUDIO_FOLDER):
+    if file_name.endswith(".wav"):
+        audio_path = os.path.join(AUDIO_FOLDER, file_name)
+        print(f"Processing {audio_path}...")
+
+        # 1. Transcribe with Whisper
+        result = model.transcribe(audio_path, regroup=False, verbose=True)
+
+        # 2. Convert segments to DataFrame
+        df_segments = pd.DataFrame(result['segments'])
+
+        # 3. (Optional) Perform diarization and align
+        if DIARIZATION:
+            speaker_segs_df = diarize(audio_path)
+            df_segments = align_diarization_and_transcription(speaker_segs_df, df_segments)
+
+        # 4. Select columns for export based on LEVEL
+        if LEVEL == "WORD":
+            export_data = pd.DataFrame(result['words'])
+            if DIARIZATION:
+                export_data = align_diarization_and_transcription(speaker_segs_df, export_data)
+        else:  # "SEGMENT" level
+            export_data = df_segments
+
+        # 5. Export to selected format
+        base_filename = os.path.splitext(file_name)[0]
+        output_path = os.path.join(OUTPUT_FOLDER, f"{base_filename}_transcript.{EXPORT_AS.lower()}")
+
+        if EXPORT_AS == "CSV":
+            export_data.to_csv(output_path, index=False)
+        elif EXPORT_AS == "TXT":
+            with open(output_path, "w", encoding="utf-8") as f:
+                for _, row in export_data.iterrows():
+                    start = row.get('start', 0)
+                    end = row.get('end', 0)
+                    text = row.get('text', '')
+                    speaker = row.get('predominant_speaker', '')
+                    f.write(f"{start:.2f}-{end:.2f} [{speaker}] {text}\n")
+
+        print(f"Saved transcription to {output_path}")
+```
+
+---
+
 
 ## **5. Save and Export Results - NEED TO EDIT FROM HERE**
 
