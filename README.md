@@ -4,7 +4,7 @@
 
 ## **Overview**
 
-This guide will help you set up and run **Whisper** (for transcription) and **Pyannote** (for speaker diarization) on your Windows 11 device. Since these tools rely on Python and machine learning models, the main focus of this tutorial is to establish the necessary environment configured. Opportunities for additional learning and data science literacy are noted. We will use Anaconda as a user-friendly platform for running Python; although Anaconda is not strictly required for running Python on a PC, we recommend it for beginners. This tutorial was conceived as a day-by-day learning process, with manageable goals for each day's topic, however it is a self-guided tutorial that can be taken at the reader's preferred pace.
+This guide will help you set up and run **Whisper** (for transcription) and **Pyannote** (for speaker diarization) on your Windows 11 device. Since these tools rely on Python and machine learning models, the main focus of this tutorial is to establish the necessary environment configured. Opportunities for additional learning and data science literacy are noted. We will use Anaconda as a user-friendly platform for running Python; although Anaconda is not strictly required for running Python on a PC, we recommend it for beginners. This tutorial was conceived as a cumulative learning process, with manageable goals for each section's topic. However, it is a self-guided tutorial that can be taken at the reader's preferred pace. Please [send me feedback](mailto:ryan.a.millager@vanderbilt.edu) with any errors, concerns, or comments that could improve this tutorial for future users.
 
 *Note: this tutorial reflects my goals to use transcription/diarization tools for research in communication sciences and disorders, with open-source and HIPAA-compliant pipelines.*
 
@@ -29,7 +29,7 @@ This guide will help you set up and run **Whisper** (for transcription) and **Py
 | Section 3 | [Installing and Running Whisper](python_for_asr_tutorial_day3.md) | Installing Whisper, test transcription |
 | Section 4 | [Installing and Running Pyannote](python_for_asr_tutorial_day4.md) | Pyannote setup, Hugging Face token |
 | Section 5 | [Analyzing Pyannote Results](python_for_asr_tutorial_day5.md) | Diarization output, alignment |
-| Section 6 | [Running an Audio File - Full Workflow] | Step-by-step review of the full process - <span style="color:red">**THIS SECTION STILL IN PROGRESS.**</span> |
+| Section 6 | [Running an Audio File - Full Workflow](python_for_asr_tutorial_day6.md) | Scripts for running complete transcription pipeline. |
 | Section 7 | [Options and Advanced Skills] | Batch transcription, alternate models, future considerations - <span style="color:red">**THIS SECTION STILL IN PROGRESS.**</span> |
 
 ### Authorship disclosure
