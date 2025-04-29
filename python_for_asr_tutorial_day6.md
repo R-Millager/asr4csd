@@ -2,11 +2,10 @@
 
 **Why this is important**: Now that you have completed the installations and learned the basics, this step serves as a quick-reference workflow for running Whisper and Pyannote on an interaction audio file. We will add in some additional pipeline details to improve functionality. **Additional authorship credit to Isabel Arvelo, M.S., for writing early drafts of portions of this tutorial page and pipeline.**
 
-*NOTE: If you have already been through this tutorial once and want to directly open the pipeline in Jupyter Notebook, you can go straight there by downloading [this file](NEEDTOADD) and opening it in your working directory. You could also [skip to the middle of this tutorial](#4-run-whisper-and-pyannote) to go right to the pipeline code.
+*NOTE: If you have already been through this tutorial once and want to directly open the pipeline in Jupyter Notebook, you can go straight there by downloading [this file](NEEDTOADD) and opening it in your working directory. You could also [skip to the middle of this tutorial](#3-run-whisper-and-pyannote) to go right to the pipeline code.
 
 # **STILL TO DO FOR THIS TUTORIAL PAGE:**
 1. Upload a finished .ipynb file in the Git to allow users who want to just jump right in to upload.
-2. Edit/correct step 5 and below.
 3. Add future notes - lags, model sizes, batch processing, etc.
 4. On to BatchAlign and the rest of the tutorial!
 5. Send to Suma and Hannah to test drive? Send to Isa?
@@ -84,7 +83,7 @@ from collections import defaultdict
 model = stable_whisper.load_model(WHISPER_MODEL)
 ```
 
-> 🧠 **Tip: Choosing and Adjusting the Model**
+> **Tip: Choosing and Adjusting the Model**
 > - Models ending in `.en` are English-only (faster, slightly more accurate for English).
 > - Full multilingual models are good for mixed-language recordings.
 
@@ -111,13 +110,7 @@ if DIARIZATION:
 
 ---
 
-# **3. Prepare Audio File(s)**
-
-Place one or more `.wav` files into your `AUDIO_FOLDER`. These will be processed automatically.
-
----
-
-# **4. RUN WHISPER AND PYANNOTE**
+# **3. RUN WHISPER AND PYANNOTE**
 
 ### Helper Functions
 
@@ -167,13 +160,13 @@ def align_diarization_and_transcription(speaker_segs_df, df_segments):
 ### Main Processing Loop
 
 ```python
-for file_name in os.listdir(AUDIO_FOLDER):
+# --- MAIN PROCESSING LOOP ---
+for file_name in tqdm(os.listdir(AUDIO_FOLDER), desc="Processing files"):
     if file_name.endswith(".wav"):
         audio_path = os.path.join(AUDIO_FOLDER, file_name)
-        print(f"Processing {audio_path}...")
 
         # 1. Transcribe with Whisper
-        result = model.transcribe(audio_path, regroup=False, verbose=True)
+        result = model.transcribe(audio_path, regroup=False, verbose=False)
 
         # 2. Convert segments to DataFrame
         df_segments = pd.DataFrame(result['segments'])
@@ -202,15 +195,14 @@ for file_name in os.listdir(AUDIO_FOLDER):
                     speaker = row.get('predominant_speaker', '')
                     f.write(f"{start:.2f}-{end:.2f} [{speaker}] {text}\n")
 
-        print(f"✅ Saved transcription to {output_path}")
+        print(f"Saved transcription to {output_path}")
 ```
 
 ---
 
 # **Congratulations!**
 
-You now have a complete transcript (and diarization labels, if selected) saved to your specified output folder.
+You should now have a complete transcript (and diarization labels, if selected) saved to your specified output folder for every audio file that was pre-loaded into your raw audio folder.
 
----
+## **Additional Notes**
 
-Would you also like me to show a quick "before and after" to help you update your full tutorial cleanly?
