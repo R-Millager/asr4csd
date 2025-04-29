@@ -6,9 +6,9 @@
 
 # **STILL TO DO FOR THIS TUTORIAL PAGE:**
 1. Upload a finished .ipynb file in the Git to allow users who want to just jump right in to upload.
-2. Add future notes - lags, model sizes, batch processing, etc.
-3. On to BatchAlign and the rest of the tutorial!
-4. Send to Suma and Hannah to test drive? Send to Isa?
+3. Add future notes - lags, model sizes, batch processing, etc.
+4. On to BatchAlign and the rest of the tutorial!
+5. Send to Suma and Hannah to test drive? Send to Isa?
 
 ---
 
@@ -22,7 +22,6 @@ conda activate whisper_py
 
 cd C:\Users\YourName\Documents\asr
 pip install --upgrade jupyterlab notebook ipywidgets widgetsnbextension
-tqdm
 jupyter notebook
 ```
 Then **open a new notebook** and proceed with the steps below.
@@ -76,7 +75,6 @@ from pyannote.core import Timeline, Segment
 from pyannote.database.util import load_rttm
 from pyannote.audio import Pipeline
 from collections import defaultdict
-from tqdm.auto import tqdm
 ```
 
 2. Load the Whisper model:
@@ -196,6 +194,8 @@ for file_name in tqdm(os.listdir(AUDIO_FOLDER), desc="Processing files"):
                     text = row.get('text', '')
                     speaker = row.get('predominant_speaker', '')
                     f.write(f"{start:.2f}-{end:.2f} [{speaker}] {text}\n")
+
+        print(f"Saved transcription to {output_path}")
 ```
 
 ---
@@ -205,3 +205,4 @@ for file_name in tqdm(os.listdir(AUDIO_FOLDER), desc="Processing files"):
 You should now have a complete transcript (and diarization labels, if selected) saved to your specified output folder for every audio file that was pre-loaded into your raw audio folder.
 
 ## **Additional Notes**
+
