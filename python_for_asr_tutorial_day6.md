@@ -1,11 +1,12 @@
 # **Part 6: Running an Audio File - Full Workflow**
 
-**Why this is important**: Now that you have completed the installations and learned the basics, this step serves as a quick-reference workflow for running Whisper and Pyannote on an interaction audio file. We will add in some additional pipeline details to improve functionality. **Additional authorship credit to Isabel Arvelo, M.S., for writing early drafts of portions of this tutorial page and pipeline.**
+**Why this is important**: Now that you have completed the installations and learned the basics, this step serves as a quick-reference workflow for running Whisper and Pyannote on an interaction audio file. We will add in some additional pipeline details to improve functionality, and allow for multiple consecutive audio files to be processed as a batch. **Additional authorship credit to Isabel Arvelo, M.S., for writing early drafts of portions of this tutorial page and pipeline.**
 
-*NOTE: If you have already been through this tutorial once and want to directly open the pipeline in Jupyter Notebook, you can go straight there by downloading [this file](NEEDTOADD) and opening it in your working directory. You could also [skip to the middle of this tutorial](#3-run-whisper-and-pyannote) to go right to the pipeline code.
+*NOTE: If you have already been through this tutorial once and want to directly open the pipeline in Jupyter Notebook, you can go straight there by downloading [this file](pipeline-v1.0.ipynb) and opening it in your working directory. You could also [skip to the middle of this tutorial](#3-run-whisper-and-pyannote) to go right to the pipeline code.
+
+> This pipeline now supports **batch-processing** — you can place multiple `.wav` files into the raw audio folder, and all will be processed automatically.
 
 # **STILL TO DO FOR THIS TUTORIAL PAGE:**
-1. Upload a finished .ipynb file in the Git to allow users who want to just jump right in to upload.
 2. Add future notes - lags, model sizes, batch processing, etc.
 3. On to BatchAlign and the rest of the tutorial!
 4. Send to Suma and Hannah to test drive? Send to Isa?
@@ -48,8 +49,13 @@ WHISPER_MODEL = "base.en"  # Options: "tiny.en", "base.en", "small.en", "medium.
 
 # 4. Processing options
 DIARIZATION = True    # True to enable speaker diarization, False otherwise
-LEVEL = "WORD"        # Options: "WORD" or "SEGMENT" - level of transcription
+LEVEL = "SEGMENT"        # Options: "WORD" (individual words) or "SEGMENT" (larger speech segments)
 EXPORT_AS = "CSV"     # Options: "CSV" or "TXT" output
+
+# --- Note ---
+# "WORD" level produces timestamps for individual words.
+# "SEGMENT" level produces timestamps for larger utterances or sentences.
+# Choose based on how detailed you want your transcription timing to be.
 
 # 5. Set Working Directory
 import os
@@ -60,7 +66,7 @@ print("User settings loaded. Working directory set.")
 
 ---
 
-# **1. Pre-preparation**
+# **1. Library Imports and Model Setup**
 
 1. Import libraries (packages) to use:
 
@@ -76,6 +82,10 @@ from pyannote.database.util import load_rttm
 from pyannote.audio import Pipeline
 from collections import defaultdict
 from tqdm.auto import tqdm
+
+# --- Optional: Suppress Pyannote warnings about std() ---
+import warnings
+warnings.filterwarnings("ignore", message=".*std\\(\\).*degrees of freedom.*")
 ```
 
 2. Load the Whisper model:
@@ -195,6 +205,8 @@ for file_name in tqdm(os.listdir(AUDIO_FOLDER), desc="Processing files"):
                     text = row.get('text', '')
                     speaker = row.get('predominant_speaker', '')
                     f.write(f"{start:.2f}-{end:.2f} [{speaker}] {text}\n")
+
+print("✅ All files processed and saved successfully!")
 ```
 
 ---
