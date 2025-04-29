@@ -195,10 +195,10 @@ for file_name in tqdm(os.listdir(AUDIO_FOLDER), desc="Processing files"):
         if DIARIZATION and LEVEL == "WORD":
             export_data = align_diarization_and_transcription(speaker_segs_df, export_data)
 			
-	# Only align diarization if LEVEL == "SEGMENT"
-	if DIARIZATION and LEVEL == "SEGMENT":
-		export_data = align_diarization_and_transcription(speaker_segs_df, export_data)
-			
+			#Only align diarization if LEVEL == "SEGMENT"
+			if DIARIZATION and LEVEL == "SEGMENT":
+				export_data = align_diarization_and_transcription(speaker_segs_df, export_data)
+						
         # 5. Save results
         base_filename = os.path.splitext(file_name)[0]
         output_path = os.path.join(OUTPUT_FOLDER, f"{base_filename}_transcript.{EXPORT_AS.lower()}")
