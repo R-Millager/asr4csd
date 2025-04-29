@@ -188,15 +188,14 @@ for file_name in tqdm(os.listdir(AUDIO_FOLDER), desc="Processing files"):
             if speaker_segs_df.empty:
                 print(f"⚠️ Warning: No speakers found in {file_name}. Skipping diarization alignment.")
             else:
-                df_segments = align_diarization_and_transcription(speaker_segs_df, df_segments)
+                if LEVEL == "SEGMENT":
+                    df_segments = align_diarization_and_transcription(speaker_segs_df, df_segments)
 
         # 4. Select export level
         export_data = pd.DataFrame(result.words) if LEVEL == "WORD" else df_segments
-        if DIARIZATION and LEVEL == "WORD":
+        if DIARIZATION and LEVEL == "SEGMENT":
             export_data = align_diarization_and_transcription(speaker_segs_df, export_data)
-	if DIARIZATION and LEVEL == "SEGMENT":
-		export_data = align_diarization_and_transcription(speaker_segs_df, export_data)
-					
+
         # 5. Save results
         base_filename = os.path.splitext(file_name)[0]
         output_path = os.path.join(OUTPUT_FOLDER, f"{base_filename}_transcript.{EXPORT_AS.lower()}")
