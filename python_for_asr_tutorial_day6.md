@@ -2,11 +2,10 @@
 
 **Why this is important**: Now that you have completed the installations and learned the basics, this step serves as a quick-reference workflow for running Whisper and Pyannote on an interaction audio file. We will add in some additional pipeline details to improve functionality. **Additional authorship credit to Isabel Arvelo, M.S., for writing early drafts of portions of this tutorial page and pipeline.**
 
-*Use this guide whenever you want to process new files with the pipeline we have introduced.*
+*NOTE: If you have already been through this tutorial once and want to directly open the pipeline in Jupyter Notebook, you can go straight there by downloading [this file](NEEDTOADD) and opening it in your working directory. You could also [skip to the middle of this tutorial](#4-run-whisper-and-pyannote) to go right to the pipeline code.
 
 # **STILL DO DO FOR THIS TUTORIAL PAGE:**
 1. Upload a finished .ipbyn file in the Git to allow users who want to just jump right in to upload.
-2. Create a link within this tutorial as well as a jump to step 4.
 3. Edit/correct step 5 and below.
 4. Add future notes - lags, model sizes, batch processing, etc.
 5. On to BatchAlign and the rest of the tutorial!
@@ -308,25 +307,6 @@ for file_name in os.listdir(AUDIO_FOLDER):
 
 ---
 
+## **CONGRATULATIONS**
 
-## **5. Save and Export Results - NEED TO EDIT FROM HERE**
-
-To save results to a CSV file:
-
-```python
-import pandas as pd
-
-# Load model and transcribe
-test_audio = "my_audio.wav"
-model = stable_whisper.load_model('base.en')
-result = model.transcribe(test_audio)
-
-# Convert to DataFrame
-df = pd.DataFrame(result.segments)
-
-# Save to CSV
-df.to_csv("transcription_results.csv", index=False)
-
-print("Transcript saved to transcription_results.csv")
-```
-
+You should, at this point, have a finished batch of transcripts.  Each .wav file will have its transcription saved to your selected `OUTPUT_FOLDER` in the format you specified (`CSV` or `TXT`).
