@@ -4,7 +4,7 @@
 
 *NOTE: If you have already been through this tutorial once and want to directly open the pipeline in Jupyter Notebook, you can go straight there by downloading [this file](pipeline-v1.0.ipynb) and opening it in your working directory. You could also [skip to the middle of this tutorial](#3-run-whisper-and-pyannote) to go right to the pipeline code.
 
-> This pipeline now supports **batch-processing** — you can place multiple `.wav` files into the raw audio folder, and all will be processed automatically.
+> This pipeline now supports **batch-processing** — you can place multiple `.wav` files into the raw audio folder, and all will be processed automatically. Note also that this code will **always expect two speakers**, anticipating evaluation of speaker dyads.
 
 # **STILL TO DO FOR THIS TUTORIAL PAGE:**
 2. Add future notes - lags, model sizes, batch processing, etc.
@@ -135,7 +135,7 @@ def diarize(audio_file_path):
     if not os.path.exists(audio_file_path):
         raise FileNotFoundError(f"The audio file {audio_file_path} does not exist.")
     with ProgressHook() as hook:
-        diarization = pipeline(audio_file_path, hook=hook)
+        diarization = pipeline(audio_file_path, hook=hook, num_speakers=2)
     diarization_list = [{
         'start': segment.start,
         'end': segment.end,
@@ -185,7 +185,10 @@ for file_name in tqdm(os.listdir(AUDIO_FOLDER), desc="Processing files"):
         # 3. Perform diarization and align
         if DIARIZATION:
             speaker_segs_df = diarize(audio_path)
-            df_segments = align_diarization_and_transcription(speaker_segs_df, df_segments)
+            if speaker_segs_df.empty:
+                print(f"⚠️ Warning: No speakers found in {file_name}. Skipping diarization alignment.")
+            else:
+                df_segments = align_diarization_and_transcription(speaker_segs_df, df_segments)
 
         # 4. Select export level
         export_data = pd.DataFrame(result.words) if LEVEL == "WORD" else df_segments
