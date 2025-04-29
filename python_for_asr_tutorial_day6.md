@@ -13,6 +13,22 @@
 
 ---
 
+# **Getting Started: Set Up Your Virtual Environment**
+
+As with the previous step, we will begin by setting up your workspace and Jupyter Notebook to run all subsequent code. We will also take care of installing a few extra packages to smooth out our pipeline.
+
+> **Before you begin**, activate your environment, install packages, confirm your working directory, and launch Jupyter:
+```sh
+conda activate whisper_py
+
+cd C:\Users\YourName\Documents\asr
+pip install --upgrade jupyterlab notebook ipywidgets widgetsnbextension
+jupyter notebook
+```
+Then **open a new notebook** and proceed with the steps below.
+
+---
+
 # **0. User Settings**
 
 Update these settings once before running the pipeline. No need to edit anything later.
