@@ -7,7 +7,9 @@
 > This pipeline now supports **batch-processing** — you can place multiple `.wav` files into the raw audio folder, and all will be processed automatically. Note also that this code will **always expect two speakers**, anticipating evaluation of speaker dyads. Finally, **if you will be using GPU processing** you will need [additional steps here](#-additional-step-for-gpu-use).
 
 # **STILL TO DO FOR THIS TUTORIAL PAGE:**
+0. Just make your tutorial more like the Isa version, it's working so much better.
 1. Fix progress bar in pipeline, get output to be labname_play_whisper.csv.
+2. Solve batch processing.
 3. On to BatchAlign and the rest of the tutorial!
 4. Send to Suma and Hannah to test drive? Send to Isa?
 
