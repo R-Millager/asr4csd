@@ -31,6 +31,7 @@ This guide will help you set up and run **Whisper** (for transcription) and **Py
 | Section 5 | [Analyzing Pyannote Results](python_for_asr_tutorial_day5.md) | Diarization output, alignment |
 | Section 6 | [Running an Audio File - Full Workflow](python_for_asr_tutorial_day6.md) | Scripts for running complete transcription pipeline. |
 | Section 7 | [Options and Advanced Skills] | Batch transcription, alternate models, future considerations - <span style="color:red">**THIS SECTION STILL IN PROGRESS.**</span> |
+| Section 8 | [Other ASR Models and Tools] | BatchAlign, Otter, SpeechBrain, etc. **THIS SECTION STILL IN PROGRESS.**|
 
 ### Authorship disclosure
 

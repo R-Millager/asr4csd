@@ -7,7 +7,7 @@
 > This pipeline now supports **batch-processing** — you can place multiple `.wav` files into the raw audio folder, and all will be processed automatically. Note also that this code will **always expect two speakers**, anticipating evaluation of speaker dyads. Finally, **if you will be using GPU processing** you will need [additional steps here](#-additional-step-for-gpu-use).
 
 # **STILL TO DO FOR THIS TUTORIAL PAGE:**
-2. Add future notes - lags, model sizes, batch processing, etc.
+1. Fix progress bar in pipeline, get output to be labname_play_whisper.csv.
 3. On to BatchAlign and the rest of the tutorial!
 4. Send to Suma and Hannah to test drive? Send to Isa?
 
@@ -34,35 +34,28 @@ Then **open a new notebook** and proceed with the steps below.
 Update these settings once before running the pipeline. No need to edit anything later.
 
 ```python
-# === USER SETTINGS ===
-
-# 1. Your working directories
-WORKING_DIR = r"C:\\Users\\YourName\\Documents\\asr"
+# --- 1. User Settings ---
+WORKING_DIR = r"C:\Users\USERNAME\Documents\asr"
 AUDIO_FOLDER = "raw_audio_folder/"
 OUTPUT_FOLDER = "transcription_output/"
 
-# 2. Your HuggingFace token (required for Pyannote diarization)
+# --- 2. HuggingFace Token (required for Pyannote diarization) ---
 HUGGINGFACE_TOKEN = "YOUR_TOKEN_HERE"
 
-# 3. Whisper model choice
+# --- 3. Whisper Model Choice ---
 WHISPER_MODEL = "base.en"  # Options: "tiny.en", "base.en", "small.en", "medium.en", "large-v3", etc.
 
-# 4. Processing options
-DIARIZATION = True    # True to enable speaker diarization, False otherwise
-LEVEL = "WORD"        # Options: "WORD" (individual words) or "SEGMENT" (larger speech segments)
-EXPORT_AS = "CSV"     # Options: "CSV" or "TXT" output
+# --- 4. Processing Options ---
+DIARIZATION = True   # True to enable speaker diarization
+LEVEL = "WORD"    # Options: "WORD" or "SEGMENT"
+EXPORT_AS = "CSV"    # Options: "CSV" or "TXT"
 
-# --- Note ---
-# "WORD" level produces timestamps for individual words.
-# "SEGMENT" level produces timestamps for larger utterances or sentences.
-# Choose based on how detailed you want your transcription timing to be.
-
-# 5. Set Working Directory
-import os
-os.chdir(WORKING_DIR)
-
-print("User settings loaded. Working directory set.")
+print("User settings loaded.")
 ```
+
+> **Tip: Choosing and Adjusting the Whisper Model**
+> - Models ending in `.en` are English-only (faster, slightly more accurate for English).
+> - Full multilingual models are good for mixed-language recordings.
 
 ---
 
@@ -71,17 +64,17 @@ print("User settings loaded. Working directory set.")
 1. Import libraries (packages) to use:
 
 ```python
-import stable_whisper
-import pandas as pd
-import torch
+# --- Required Libraries ---
+import os
 import json
+import torch
 import gc
-from pyannote.audio.pipelines.utils.hook import ProgressHook
+import pandas as pd
+from collections import defaultdict
 from pyannote.core import Timeline, Segment
 from pyannote.database.util import load_rttm
 from pyannote.audio import Pipeline
-from collections import defaultdict
-from tqdm.auto import tqdm
+from pyannote.audio.pipelines.utils.hook import ProgressHook
 
 # --- Optional: Suppress Pyannote warnings about std() ---
 import warnings
@@ -91,30 +84,27 @@ warnings.filterwarnings("ignore", message=".*std\\(\\).*degrees of freedom.*")
 2. Load the Whisper model:
 
 ```python
+# --- Load Whisper Model ---
+import stable_whisper
 model = stable_whisper.load_model(WHISPER_MODEL)
 ```
-
-> **Tip: Choosing and Adjusting the Model**
-> - Models ending in `.en` are English-only (faster, slightly more accurate for English).
-> - Full multilingual models are good for mixed-language recordings.
 
 ---
 
 ## **2. Set Up Folders and Pipelines**
 
 ```python
-# --- Ensure Input and Output Folders Exist ---
+# --- Set Directories ---
+os.chdir(WORKING_DIR)
 os.makedirs(AUDIO_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-# --- Set Up Diarization Pipeline if Requested ---
+# --- Set up Pyannote Pipeline if Diarization is Enabled ---
 if DIARIZATION:
     pipeline = Pipeline.from_pretrained(
         "pyannote/speaker-diarization-3.1",
         use_auth_token=HUGGINGFACE_TOKEN
     )
-
-    # Dynamically select device (CPU or CUDA if available)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     pipeline.to(device)
 ```
@@ -126,11 +116,14 @@ if DIARIZATION:
 ### Helper Functions
 
 ```python
+# --- Helper Function to Check Overlap ---
 def is_overlap(start1, end1, start2, end2):
     return max(start1, start2) < min(end1, end2)
 ```
 
 ```python
+# --- note that "num_speakers=2" below forces Pyannote to define two speakers ---
+
 def diarize(audio_file_path):
     if not os.path.exists(audio_file_path):
         raise FileNotFoundError(f"The audio file {audio_file_path} does not exist.")
@@ -183,15 +176,23 @@ def align_diarization_and_transcription(speaker_segs_df, df_segments):
 ### Main Processing Loop
 
 ```python
+
+from tqdm.auto import tqdm
+
 # --- MAIN PROCESSING LOOP ---
 for file_name in tqdm(os.listdir(AUDIO_FOLDER), desc="Processing files"):
     if file_name.endswith(".wav"):
         audio_path = os.path.join(AUDIO_FOLDER, file_name)
 
         # 1. Transcribe with Whisper
-        result = model.transcribe(audio_path, regroup=False, verbose=False)
+        result = model.transcribe(
+            audio_path,
+            word_timestamps=True,
+            regroup=False,
+            verbose=False
+        )
 
-        # 2. Convert segments to DataFrame
+        # 2. Convert segment-level to DataFrame (used for fallback or LEVEL == "SEGMENT")
         df_segments = pd.DataFrame(result.segments)
 
         # 3. Perform diarization and align
@@ -199,14 +200,26 @@ for file_name in tqdm(os.listdir(AUDIO_FOLDER), desc="Processing files"):
             speaker_segs_df = diarize(audio_path)
             if speaker_segs_df.empty:
                 print(f"⚠️ Warning: No speakers found in {file_name}. Skipping diarization alignment.")
-            else:
-                if LEVEL == "SEGMENT":
-                    df_segments = align_diarization_and_transcription(speaker_segs_df, df_segments)
+            elif LEVEL == "SEGMENT":
+                df_segments = align_diarization_and_transcription(speaker_segs_df, df_segments)
 
         # 4. Select export level
-        export_data = pd.DataFrame(result.words) if LEVEL == "WORD" else df_segments
-        if DIARIZATION and LEVEL == "SEGMENT":
-            export_data = align_diarization_and_transcription(speaker_segs_df, export_data)
+        if LEVEL == "WORD":
+            words_data = []
+            for segment in result.ori_dict['segments']:
+                for word in segment.get('words', []):
+                    words_data.append({
+                        'word': word['word'],
+                        'start': word['start'],
+                        'end': word['end'],
+                        'probability': word.get('probability', None)
+                    })
+            export_data = pd.DataFrame(words_data)
+        else:
+            export_data = df_segments
+            if DIARIZATION and LEVEL == "WORD":
+    export_data = align_diarization_and_transcription(speaker_segs_df, export_data)
+
 
         # 5. Save results
         base_filename = os.path.splitext(file_name)[0]
@@ -216,9 +229,11 @@ for file_name in tqdm(os.listdir(AUDIO_FOLDER), desc="Processing files"):
         else:
             with open(output_path, "w", encoding="utf-8") as f:
                 for _, row in export_data.iterrows():
+                    if not row.get('text'):
+                        continue
                     start = row.get('start', 0)
                     end = row.get('end', 0)
-                    text = row.get('text', '')
+                    text = row.get('text', '').strip()
                     speaker = row.get('predominant_speaker', '')
                     f.write(f"{start:.2f}-{end:.2f} [{speaker}] {text}\n")
 
