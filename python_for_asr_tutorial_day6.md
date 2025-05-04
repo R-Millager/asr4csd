@@ -4,7 +4,7 @@
 
 *NOTE: If you have already been through this tutorial once and want to directly open the pipeline in Jupyter Notebook, you can go straight there by downloading [this file](pipeline-v1.0.ipynb) and opening it in your working directory. You could also [skip to the middle of this tutorial](#3-run-whisper-and-pyannote) to go right to the pipeline code.
 
-> This pipeline now supports **batch-processing** — you can place multiple `.wav` files into the raw audio folder, and all will be processed automatically. Note also that this code will **always expect two speakers**, anticipating evaluation of speaker dyads.
+> This pipeline now supports **batch-processing** — you can place multiple `.wav` files into the raw audio folder, and all will be processed automatically. Note also that this code will **always expect two speakers**, anticipating evaluation of speaker dyads. Finally, **if you will be using GPU processing** you will need [additional steps here](#-additional-step-for-gpu-use).
 
 # **STILL TO DO FOR THIS TUTORIAL PAGE:**
 2. Add future notes - lags, model sizes, batch processing, etc.
@@ -13,7 +13,7 @@
 
 ---
 
-# **Getting Started: Set Up Your Virtual Environment**
+## **Getting Started: Set Up Your Virtual Environment**
 
 As with the previous step, we will begin by setting up your workspace and Jupyter Notebook to run all subsequent code. We will also take care of installing a few extra packages to smooth out our pipeline.
 
@@ -29,7 +29,7 @@ Then **open a new notebook** and proceed with the steps below.
 
 ---
 
-# **0. User Settings**
+## **0. User Settings**
 
 Update these settings once before running the pipeline. No need to edit anything later.
 
@@ -66,7 +66,7 @@ print("User settings loaded. Working directory set.")
 
 ---
 
-# **1. Library Imports and Model Setup**
+## **1. Library Imports and Model Setup**
 
 1. Import libraries (packages) to use:
 
@@ -100,7 +100,7 @@ model = stable_whisper.load_model(WHISPER_MODEL)
 
 ---
 
-# **2. Set Up Folders and Pipelines**
+## **2. Set Up Folders and Pipelines**
 
 ```python
 # --- Ensure Input and Output Folders Exist ---
@@ -121,7 +121,7 @@ if DIARIZATION:
 
 ---
 
-# **3. RUN WHISPER AND PYANNOTE**
+## **3. RUN WHISPER AND PYANNOTE**
 
 ### Helper Functions
 
@@ -226,6 +226,35 @@ print("✅ All files processed and saved successfully!")
 ```
 
 ---
+
+## **ADDITIONAL STEP FOR GPU USE**
+
+To use an NVIDIA GPU (*Graphics Processing Unit*) for more advanced computing power and speed, you should complete the following steps *before* running the pipeline code above.
+
+### A. Confirm your GPU is detected
+
+In **Anaconda Prompt**, run:
+```python
+nvidia-smi```
+
+This should return a table with your GPU model and driver version. If not, you may need to install the latest driver and reboot your device.
+
+### B. Install PyTorch with CUDA support
+
+Again in **Anaconda Prompt** with your virtual environment active (i.e., whisper_py), enter the following for CUDA 11.8 (compatible with most systems):
+```python
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+```
+
+Be sure to check CUDA compatibility and change the download link if newer downloads are needed (e.g., newer cards may use CUDA 12.1 for a link in the above code ending in `wh1/cu121`).
+
+The following code should confirm that your environment is ready for GPU use:
+
+```python
+import torch
+print(torch.cuda.is_available())      # Should return True
+print(torch.cuda.get_device_name(0))  # Should print your GPU name
+```
 
 ## **Congratulations!**
 
