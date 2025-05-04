@@ -159,4 +159,6 @@ You should see: `This practice Python script says, 'Live long and prosper.'`
 
 ---
 
-Spend some time experimenting with these basics. In future steps, we'll be running more complex diarization and transcription processes with these tools.
+## Congratulations!
+
+Spend some time experimenting with these Python basics. Once you are ready, move on to [Step 3](python_for_asr_tutorial_day3.md) where we will proceed to install and use Whisper for primary transcription!

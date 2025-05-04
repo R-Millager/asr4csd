@@ -1,6 +1,6 @@
 # **Part 4: Installing and Running Pyannote**
 
-> **Why this is important:** Pyannote enables speaker diarization, allowing you to identify different speakers in an audio file with corresponding timestamps. This is critical for producing transcripts of conversations between two speakers. In later tutorial steps, we will align and merge Pyannote output with Whisper transcription to create a final transcript for analysis and coding.
+> **Why this is important:** Pyannote enables *speaker diarization*, allowing you to identify different speakers in an audio file with corresponding timestamps. This is critical for producing transcripts of conversations between two speakers. In later tutorial steps, we will align and merge Pyannote output with Whisper transcription to create a final transcript for analysis and coding.
 
 ## **1. Set Up Hugging Face Authentication**
 
@@ -145,3 +145,9 @@ print("✅ Pyannote output also saved as 'pyannote_output.csv'")
 ### **Inaccurate speaker diarization**
 - Try increasing the model confidence threshold or using a higher-quality audio file.
 - You can also test Pyannote on a **smaller segment of your audio** before running the full file.
+
+---
+
+## Congratulations!
+
+Once you have successfully added diarization to your toolkit, you have all of the key elements of a transcription ready for analysis. In [Step 5](python_for_asr_tutorial_day5.md), we will spend a little more time combining the output from these two processes to create and view your output.

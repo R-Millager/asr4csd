@@ -162,3 +162,7 @@ Here are a few common model options (from smallest to largest):
 - `medium.en`, `large` – higher accuracy but much slower
 
 > 📝 The `.en` suffix loads English-only versions of the models, which are slightly faster and more memory-efficient than multilingual versions.
+
+## Congratulations!
+
+After this step, you are able to use Whisper as an open-source tool for generating transcripts from audio. In [Step 4](python_for_asr_tutorial_day4.md) we will add the *diarization* step to assign utterances to individual speakers.

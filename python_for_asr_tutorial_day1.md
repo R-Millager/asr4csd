@@ -35,6 +35,6 @@ FFmpeg is a widely used tool for processing audio. We will install it directly i
    ffmpeg -version
    ```
   
+## **Congratulations!**
 
----
-
+Once you have finished these steps and you are comfortable starting **Anaconda Prompt**, you are ready for [Step 2](python_for_asr_tutorial_day2.md). In the next step, we will carry on with some basic Python functions in Anaconda Prompt and set up some tools that will be needed to generate your transcripts.

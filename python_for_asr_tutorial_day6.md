@@ -49,7 +49,7 @@ WHISPER_MODEL = "base.en"  # Options: "tiny.en", "base.en", "small.en", "medium.
 
 # 4. Processing options
 DIARIZATION = True    # True to enable speaker diarization, False otherwise
-LEVEL = "SEGMENT"        # Options: "WORD" (individual words) or "SEGMENT" (larger speech segments)
+LEVEL = "WORD"        # Options: "WORD" (individual words) or "SEGMENT" (larger speech segments)
 EXPORT_AS = "CSV"     # Options: "CSV" or "TXT" output
 
 # --- Note ---
@@ -227,8 +227,8 @@ print("✅ All files processed and saved successfully!")
 
 ---
 
-# **Congratulations!**
+## **Congratulations!**
 
 You should now have a complete transcript (and diarization labels, if selected) saved to your specified output folder for every audio file that was pre-loaded into your raw audio folder.
 
-## **Additional Notes**
+If you want to continue learning, we have included a [Step 7](python_for_asr_tutorial_day7.md) to evaluate model accuracy and performance. We also have a bank of tools to utilize for converting .csv files to common speech-language analysis platforms such as SALT and CLAN.

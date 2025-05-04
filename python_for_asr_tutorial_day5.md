@@ -119,4 +119,8 @@ This is a helpful way to verify that speaker labels, timestamps, and transcript 
 
 - If speaker labels seem **inaccurate**, try a **smaller audio segment**.
 - If timestamps don’t match, check if **both Whisper and Pyannote used the same audio file**.
-- If diarization runs too slowly, consider a **university server with GPU access**.
+- If diarization runs too slowly, consider a **university server system or higher-GPU device**.
+
+## Congratulations!
+
+If you have successfully completed the steps for today, you have set your device up for the basics and understand the different components of our Whisper-based ASR pipeline. In [Step 6](python_for_asr_tutorial_day6.md), we will bring everything together for a pipeline that can transcribe new audio files in one go.
