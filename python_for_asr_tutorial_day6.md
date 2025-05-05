@@ -324,7 +324,7 @@ for filename in os.listdir(audio_folder):
 
 ---
 
-## **4. ADDITIONAL STEP FOR GPU USE**
+## **4. ADDITIONAL STEPS FOR GPU USE**
 
 To use an NVIDIA GPU (*Graphics Processing Unit*) for more advanced computing power and speed, you should complete the following steps *before* running the pipeline code above.
 
