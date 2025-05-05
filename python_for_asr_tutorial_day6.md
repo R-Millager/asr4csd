@@ -121,7 +121,7 @@ def is_overlap(start1, end1, start2, end2):
 def diarize(audio_file_path):
     
     with ProgressHook() as hook:
-          diarization = pipeline(audio_file_path, hook=hook)
+          diarization = pipeline(audio_file_path, hook=hook, min_speakers=2, max_speakers=2) #<--this indicates anticipated # of speakers
     
     diarization_list = [{
                 'start': segment.start,
