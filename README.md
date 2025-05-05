@@ -6,19 +6,19 @@
 
 This guide will help you set up and run **Whisper** (for transcription) and **Pyannote** (for speaker diarization) on your Windows 11 device. Since these tools rely on Python and machine learning models, the main focus of this tutorial is to establish the necessary environment configured. Opportunities for additional learning and data science literacy are noted. We will use Anaconda as a user-friendly platform for running Python; although Anaconda is not strictly required for running Python on a PC, we recommend it for beginners. This tutorial was conceived as a cumulative learning process, with manageable goals for each section's topic. However, it is a self-guided tutorial that can be taken at the reader's preferred pace. Please [send me feedback](mailto:ryan.a.millager@vanderbilt.edu) with any errors, concerns, or comments that could improve this tutorial for future users.
 
-*Note: this tutorial reflects my goals to use transcription/diarization tools for research in communication sciences and disorders, with open-source and HIPAA-compliant pipelines.*
+*Note: this tutorial reflects my goals to use transcription/diarization tools for research in communication sciences and disorders, with open-source tools and all analyses conducted on local servers to protect participant confidentiality.*
 
 ### **Prerequisites for This Tutorial**
 
 - Windows 11 PC (**TO ADD: MEMORY/PERFORMANCE REQUIREMENTS FOR PIPELINE**)
 - Administrative permissions (and willingness) to install additional tools like Python and Jupyter Notebook
-- A test audio file (.wav format) -- we recommend a recording of just a few minutes (3-5 minutes max) with two speakers and minimal background noise so that you can test the tools in this tutorial.
+- A test audio file (.wav format) -- we recommend a recording of just a few minutes (3-5 minutes max) with two speakers and minimal background noise so that you can readily test the tools in this tutorial.
 
 ### **Other Resources**
 
 - [Self-study curriculum](https://github.com/NeuralNine/python-curriculum)
 - [Python for R users](https://rebeccabarter.com/blog/2023-09-11-from_r_to_python)
-- [Datacamp paid course](https://www.datacamp.com/courses/python-for-r-users)
+- [Datacamp course](https://www.datacamp.com/courses/python-for-r-users)
 
 ## Table of Contents
 
@@ -29,8 +29,8 @@ This guide will help you set up and run **Whisper** (for transcription) and **Py
 | Section 3 | [Installing and Running Whisper](python_for_asr_tutorial_day3.md) | Installing Whisper, test transcription |
 | Section 4 | [Installing and Running Pyannote](python_for_asr_tutorial_day4.md) | Pyannote setup, Hugging Face token |
 | Section 5 | [Analyzing Pyannote Results](python_for_asr_tutorial_day5.md) | Diarization output, alignment |
-| Section 6 | [Running an Audio File - Full Workflow](python_for_asr_tutorial_day6.md) | Scripts for running complete transcription pipeline. |
-| Section 7 | [Options and Advanced Skills] | Batch transcription, alternate models, future considerations - <span style="color:red">**THIS SECTION STILL IN PROGRESS.**</span> |
+| Section 6 | [Running an Audio File - Full Workflow](python_for_asr_tutorial_day6.md) | Scripts for running complete transcription pipeline. **SEE HERE IF YOU ARE ALREADY COMFORTABLE WITH PYTHON.** |
+| Section 7 | [Options and Advanced Skills] | Prep for language analyses and accuracy tools - <span style="color:red">**THIS SECTION STILL IN PROGRESS.**</span> |
 | Section 8 | [Other ASR Models and Tools] | BatchAlign, Otter, SpeechBrain, etc. **THIS SECTION STILL IN PROGRESS.**|
 
 ### Authorship disclosure

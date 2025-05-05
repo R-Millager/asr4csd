@@ -1,17 +1,10 @@
 # **Part 6: Running an Audio File - Full Workflow**
 
-**Why this is important**: Now that you have completed the installations and learned the basics, this step serves as a quick-reference workflow for running Whisper and Pyannote on an interaction audio file. We will add in some additional pipeline details to improve functionality, and allow for multiple consecutive audio files to be processed as a batch. **Additional authorship credit to Isabel Arvelo, M.S., for writing early drafts of portions of this tutorial page and pipeline.**
+**Why this is important**: Now that you have completed the installations and learned the basics, this step serves as a quick-reference workflow for running Whisper and Pyannote on an interaction audio file. We will add in some additional pipeline details to improve functionality, and allow for multiple consecutive audio files to be processed as a batch. **Additional authorship credit to Isabel Arvelo, M.S., for writing early drafts of portions of this pipeline.**
 
 *NOTE: If you have already been through this tutorial once and want to directly open the pipeline in Jupyter Notebook, you can go straight there by downloading [this file](pipeline-v1.0.ipynb) and opening it in your working directory. You could also [skip to the middle of this tutorial](#3-run-whisper-and-pyannote) to go right to the pipeline code.
 
 > This pipeline now supports **batch-processing** — you can place multiple `.wav` files into the raw audio folder, and all will be processed automatically. Note also that this code will **always expect two speakers**, anticipating evaluation of speaker dyads. Finally, **if you will be using GPU processing** you will need [additional steps here](#-additional-step-for-gpu-use).
-
-# **STILL TO DO FOR THIS TUTORIAL PAGE:**
-0. Just make your tutorial more like the Isa version, it's working so much better.
-1. Fix progress bar in pipeline, get output to be labname_play_whisper.csv.
-2. Solve batch processing.
-3. On to BatchAlign and the rest of the tutorial!
-4. Send to Suma and Hannah to test drive? Send to Isa?
 
 ---
 
@@ -67,27 +60,28 @@ print("User settings loaded.")
 
 ```python
 # --- Required Libraries ---
+import stable_whisper
+import pandas as pd # aliases are often used to avoid having to refer to the library by its full name 
+import torch
 import os
 import json
-import torch
 import gc
-import pandas as pd
-from collections import defaultdict
+```
+
+```python
+from pyannote.audio.pipelines.utils.hook import ProgressHook
 from pyannote.core import Timeline, Segment
 from pyannote.database.util import load_rttm
 from pyannote.audio import Pipeline
-from pyannote.audio.pipelines.utils.hook import ProgressHook
+```
 
-# --- Optional: Suppress Pyannote warnings about std() ---
-import warnings
-warnings.filterwarnings("ignore", message=".*std\\(\\).*degrees of freedom.*")
+```python
+from collections import defaultdict
 ```
 
 2. Load the Whisper model:
 
 ```python
-# --- Load Whisper Model ---
-import stable_whisper
 model = stable_whisper.load_model(WHISPER_MODEL)
 ```
 
@@ -96,13 +90,13 @@ model = stable_whisper.load_model(WHISPER_MODEL)
 ## **2. Set Up Folders and Pipelines**
 
 ```python
-# --- Set Directories ---
+# --- Set Working Directory ---
 os.chdir(WORKING_DIR)
 os.makedirs(AUDIO_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 # --- Set up Pyannote Pipeline if Diarization is Enabled ---
-if DIARIZATION:
+if (DIARIZATION == True):
     pipeline = Pipeline.from_pretrained(
         "pyannote/speaker-diarization-3.1",
         use_auth_token=HUGGINGFACE_TOKEN
@@ -124,122 +118,208 @@ def is_overlap(start1, end1, start2, end2):
 ```
 
 ```python
-# --- note that "num_speakers=2" below forces Pyannote to define two speakers ---
-
 def diarize(audio_file_path):
-    if not os.path.exists(audio_file_path):
-        raise FileNotFoundError(f"The audio file {audio_file_path} does not exist.")
+    
     with ProgressHook() as hook:
-        diarization = pipeline(audio_file_path, hook=hook, num_speakers=2)
-
-    diarization_list = []
-    for segment, track in diarization._tracks.items():
-        try:
-            speaker = list(track.values())[0]
-            diarization_list.append({
+          diarization = pipeline(audio_file_path, hook=hook)
+    
+    diarization_list = [{
                 'start': segment.start,
                 'end': segment.end,
-                'speaker': speaker
-            })
-        except Exception as e:
-            print(f"⚠️ Failed to parse segment {segment}: {e}")
+                'speaker': list(track.values())[0]
+            } for segment, track in diarization._tracks.items()]
 
-    if not diarization_list:
-        print(f"⚠️ No speaker tracks found in {audio_file_path}")
-        return pd.DataFrame(columns=['start', 'end', 'speaker'])
+    diarization_df = pd.DataFrame(diarization_list)
 
-    return pd.DataFrame(diarization_list)
+    return diarization_df 
 ```
 
 ```python
 def align_diarization_and_transcription(speaker_segs_df, df_segments):
-    if speaker_segs_df.empty or df_segments.empty:
-        raise ValueError("Speaker segments or transcription segments are empty.")
-    labels, predominant_labels = [], []
-    for _, row in df_segments.iterrows():
+    
+    labels = []
+    predominant_labels = []
+    max_overlaps = []
+    durations = []
+    all_overlaps = []
+    
+      
+    for i, row in df_segments.iterrows():
+        
         overlaps = speaker_segs_df.apply(
             lambda x: (x['speaker'], min(row['end'], x['end']) - max(row['start'], x['start'])) 
-            if is_overlap(row['start'], row['end'], x['start'], x['end']) else (None, 0),
+            if is_overlap(row['start'], row['end'], x['start'], x['end']) else (None, 0), 
             axis=1
         )
+        
+        # Filter out non-overlapping entries
         overlaps = overlaps[overlaps.apply(lambda x: x[0] is not None)]
-        collapsed = defaultdict(float)
-        for speaker, duration in overlaps:
-            collapsed[speaker] += duration
-        if collapsed:
-            predominant = max(collapsed, key=collapsed.get)
-            predominant_labels.append(predominant)
+        
+        # Extract labels and their corresponding overlap times
+        overlapping_labels = overlaps.apply(lambda x: x[0])
+        
+        overlapping_labels.reset_index(drop=True, inplace=True)
+        
+        labels.append(" ".join(overlapping_labels))
+        
+        # Initialize a defaultdict to store the summed values
+        collapsed_dict = defaultdict(float)
+        
+        # Iterate over the series and sum values for each key
+        for item in overlaps:
+            key, value = item
+            collapsed_dict[key] += value
+        
+        # Convert the defaultdict back to a list of tuples 
+        collapsed_list = list(collapsed_dict.items())
+        non_empty_label_overlap = [item for item in collapsed_list if item[0] is not None]
+        collapsed_series = pd.Series(collapsed_list)
+        
+        overlap_times = collapsed_series.apply(lambda x: x[1])
+        overlap_labels = collapsed_series.apply(lambda x: x[0])
+        
+        
+        overlap_times.reset_index(drop=True, inplace=True)
+        overlap_labels.reset_index(drop=True, inplace=True)
+        
+        # Determine the predominant label (the one with the greatest overlap time)
+        if not overlap_times.empty:
+           # print(overlap_times)
+            predominant_label = overlap_labels.iloc[overlap_times.idxmax()]
+            predominant_labels.append(predominant_label)
+            max_overlap = overlap_times.iloc[overlap_times.idxmax()]
+            max_overlaps.append(max_overlap)
+            all_overlaps.append(non_empty_label_overlap)
         else:
             predominant_labels.append("")
+            max_overlaps.append("")
+            all_overlaps.append("")
+        
     df_segments["predominant_speaker"] = predominant_labels
+
     return df_segments
 ```
 
 ### Main Processing Loop
 
 ```python
+def process_audio_file(model, audio_file_path, level, diarization = False):
+    result = model.transcribe(audio_file_path)
 
-from tqdm.auto import tqdm
+    data = result.ori_dict
 
-# --- MAIN PROCESSING LOOP ---
-for file_name in tqdm(os.listdir(AUDIO_FOLDER), desc="Processing files"):
-    if file_name.endswith(".wav"):
-        audio_path = os.path.join(AUDIO_FOLDER, file_name)
-
-        # 1. Transcribe with Whisper
-        result = model.transcribe(
-            audio_path,
-            word_timestamps=True,
-            regroup=False,
-            verbose=False
-        )
-
-        # 2. Convert segment-level to DataFrame (used for fallback or LEVEL == "SEGMENT")
-        df_segments = pd.DataFrame(result.segments)
-
-        # 3. Perform diarization and align
-        if DIARIZATION:
-            speaker_segs_df = diarize(audio_path)
-            if speaker_segs_df.empty:
-                print(f"⚠️ Warning: No speakers found in {file_name}. Skipping diarization alignment.")
-            elif LEVEL == "SEGMENT":
-                df_segments = align_diarization_and_transcription(speaker_segs_df, df_segments)
-
-        # 4. Select export level
-        if LEVEL == "WORD":
-            words_data = []
-            for segment in result.ori_dict['segments']:
-                for word in segment.get('words', []):
-                    words_data.append({
-                        'word': word['word'],
-                        'start': word['start'],
-                        'end': word['end'],
-                        'probability': word.get('probability', None)
-                    })
-            export_data = pd.DataFrame(words_data)
-        else:
-            export_data = df_segments
-            if DIARIZATION and LEVEL == "WORD":
-    export_data = align_diarization_and_transcription(speaker_segs_df, export_data)
+    if diarization == True:
+        diarization_df = diarize(audio_file_path)
 
 
-        # 5. Save results
-        base_filename = os.path.splitext(file_name)[0]
-        output_path = os.path.join(OUTPUT_FOLDER, f"{base_filename}_transcript.{EXPORT_AS.lower()}")
+    if level == "WORD":
+        words_data = []
+        for segment in data['segments']:
+            for word in segment['words']:
+                words_data.append({
+                    'word': word['word'],
+                    'start': word['start'],
+                    'end': word['end'],
+                    'probability': word['probability']
+                })
+        
+        timestamp_df = pd.DataFrame(words_data)
+
+    elif level == "SEGMENT":
+        utterances_data = []
+        for segment in data['segments']:
+            utterances_data.append({
+                'text': segment['text'],
+                'start': segment['start'],
+                'end': segment['end'],
+                'id': segment['id']
+            })
+        
+        timestamp_df = pd.DataFrame(utterances_data)
+
+    if diarization == True:
+        diarization_and_timestamp_df = align_diarization_and_transcription(diarization_df, timestamp_df)
+        return diarization_and_timestamp_df 
+    else:
+        return timestamp_df
+```
+
+```python
+def df_to_textgrid(df):
+    # Create a new TextGrid object
+    tg = textgrid.Textgrid()
+    
+    min_time = df['start'].min()
+    max_time = df['end'].max()
+    
+    # Check if 'predominant_speaker' column exists
+    has_speaker_info = 'predominant_speaker' in df.columns
+    
+    if has_speaker_info:
+        # Create an IntervalTier for each unique speaker
+        speakers = df['predominant_speaker'].unique()
+        for speaker in speakers:
+            # Create a tier for the speaker
+            speaker_tier =  IntervalTier(str(speaker), [], minT=min_time, maxT=max_time)
+            
+            # Filter the DataFrame for this speaker
+            speaker_df = df[df['predominant_speaker'] == speaker]
+            
+            # Add intervals to the tier
+            for _, row in speaker_df.iterrows():
+                interval = Interval(row['start'], row['end'], row['word'])
+                speaker_tier.insertEntry(interval, collisionMode='merge')
+            
+            # Add tier to TextGrid
+            tg.addTier(speaker_tier)
+    
+    # Create a transcription tier (this will be created regardless of speaker info)
+    trans_tier = IntervalTier('transcription', [], minT=min_time, maxT=max_time)
+
+    
+    for _, row in df.iterrows():
+        interval = Interval(row['start'], row['end'], row['text'])
+        trans_tier.insertEntry(interval, collisionMode='merge')
+    
+    tg.addTier(trans_tier)
+    
+    return tg
+```
+
+```python
+audio_folder = AUDIO_FOLDER
+output_folder = OUTPUT_FOLDER
+
+os.makedirs(output_folder, exist_ok=True)
+
+for filename in os.listdir(audio_folder):
+    if filename.lower().endswith(('.wav', '.mp3', '.flac')):  # Add or remove audio formats as needed
+        audio_file_path = os.path.join(audio_folder, filename)
+        
+        print(f"Processing: {filename}")
+        
+        # Process the audio file
+        df_transcript = process_audio_file(model, audio_file_path, level = LEVEL, diarization = DIARIZATION)
+        
+        # Generate output filename (without extension)
+        output_filename = os.path.splitext(filename)[0]
+        
         if EXPORT_AS == "CSV":
-            export_data.to_csv(output_path, index=False)
+            output_path = os.path.join(output_folder, f"{output_filename}.csv")
+            df_transcript.to_csv(output_path, index=False)
+        elif EXPORT_AS == "TXT":
+            output_path = os.path.join(output_folder, f"{output_filename}.txt")
+            with open(output_path, 'w') as f:
+                df_string = df_transcript.to_string(header=False, index=False)
+                f.write(df_string)
         else:
-            with open(output_path, "w", encoding="utf-8") as f:
-                for _, row in export_data.iterrows():
-                    if not row.get('text'):
-                        continue
-                    start = row.get('start', 0)
-                    end = row.get('end', 0)
-                    text = row.get('text', '').strip()
-                    speaker = row.get('predominant_speaker', '')
-                    f.write(f"{start:.2f}-{end:.2f} [{speaker}] {text}\n")
+            print(f"Unsupported export format: {export_format}")
+            continue
+        
+        print(f"Saved transcription to: {os.path.basename(output_path)}")
 
-print("✅ All files processed and saved successfully!")
+    gc.collect()
+    torch.cuda.empty_cache()
 ```
 
 ---
