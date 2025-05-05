@@ -2,9 +2,9 @@
 
 **Why this is important**: Now that you have completed the installations and learned the basics, this step serves as a quick-reference workflow for running Whisper and Pyannote on an interaction audio file. We will add in some additional pipeline details to improve functionality, and allow for multiple consecutive audio files to be processed as a batch. **Additional authorship credit to Isabel Arvelo, M.S., for writing early drafts of portions of this pipeline.**
 
-*NOTE: If you have already been through this tutorial once and want to directly open the pipeline in Jupyter Notebook, you can go straight there by downloading [this file](pipeline-v1.0.ipynb) and opening it in your working directory. You could also [skip to the middle of this tutorial](#3-run-whisper-and-pyannote) to go right to the pipeline code.
+*NOTE: If you have already been through this tutorial once and want to directly open the pipeline in Jupyter Notebook, you can go straight there by downloading [this file](pipeline-v1.0.ipynb) and opening it in your working directory. You could also [skip to the middle of this tutorial](#3-run-whisper-and-pyannote) to go right to the pipeline code.*
 
-> This pipeline now supports **batch-processing** — you can place multiple `.wav` files into the raw audio folder, and all will be processed automatically. Note also that this code will **always expect two speakers**, anticipating evaluation of speaker dyads. Finally, **if you will be using GPU processing** you will need [additional steps here](#-additional-step-for-gpu-use).
+> This pipeline supports **batch-processing** — you can place multiple `.wav` files into the raw audio folder, and all will be processed automatically. Note also that this code will **always expect two speakers**, anticipating evaluation of speaker dyads. Finally, **if you will be using GPU processing** you will need [additional steps here](#4-additional-step-for-gpu-use).
 
 ---
 
@@ -324,7 +324,7 @@ for filename in os.listdir(audio_folder):
 
 ---
 
-## **ADDITIONAL STEP FOR GPU USE**
+## **4. ADDITIONAL STEP FOR GPU USE**
 
 To use an NVIDIA GPU (*Graphics Processing Unit*) for more advanced computing power and speed, you should complete the following steps *before* running the pipeline code above.
 
