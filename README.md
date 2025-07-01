@@ -34,7 +34,7 @@ Consider reviewing these free, self-guided resources for orientation to Python. 
 | Section 5 | [Analyzing Pyannote Results](python_for_asr_tutorial_day5.md) | Diarization output, alignment |
 | Section 6 | [Running an Audio File - Full Workflow](python_for_asr_tutorial_day6.md) | Scripts for running complete transcription pipeline. **CLICK HERE IF YOU ARE ALREADY COMFORTABLE WITH PYTHON AND THE BASICS.** |
 | Section 7 | [Options and Advanced Skills] | Prep for language analyses and accuracy tools - <span style="color:red">**THIS SECTION STILL IN PROGRESS.**</span> |
-| Section 8 | [Other ASR Models and Tools] | BatchAlign, Otter, SpeechBrain, etc. **THIS SECTION STILL IN PROGRESS.**|
+| Section 8 | [Other ASR Models and Tools] | BatchAlign, SpeechBrain, etc. **THIS SECTION STILL IN PROGRESS.**|
 
 ### Authorship disclosure
 
