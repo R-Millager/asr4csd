@@ -10,15 +10,18 @@ This guide will help you set up and run **Whisper** (for transcription) and **Py
 
 ### **Prerequisites for This Tutorial**
 
-- Windows 11 PC (**TO ADD: MEMORY/PERFORMANCE REQUIREMENTS FOR PIPELINE**)
+- Windows 11 PC
+    - *Advanced computing power (e.g., GPU access) is not necessarily required for this tutorial, which was designed with average CPUs in mind. Larger files, or larger Whisper models, may take a long time to process but should not result in crashes.*
 - Administrative permissions (and willingness) to install additional tools like Python and Jupyter Notebook
 - A test audio file (.wav format) -- we recommend a recording of just a few minutes (3-5 minutes max) with two speakers and minimal background noise so that you can readily test the tools in this tutorial.
 
 ### **Other Resources**
 
-- [Self-study curriculum](https://github.com/NeuralNine/python-curriculum)
-- [Python for R users](https://rebeccabarter.com/blog/2023-09-11-from_r_to_python)
-- [Datacamp course](https://www.datacamp.com/courses/python-for-r-users)
+Consider reviewing these free, self-guided resources for orientation to Python. These tools are *not required* to follow the current tutorial.
+- [General introduction to Python](https://www.freecodecamp.org/learn/python-for-everybody/)
+- [Data analysis with Python](https://www.freecodecamp.org/learn/data-analysis-with-python/)
+- [Python for R users summary](https://rebeccabarter.com/blog/2023-09-11-from_r_to_python)
+- [Python for R users datacamp course](https://www.datacamp.com/courses/python-for-r-users)
 
 ## Table of Contents
 
@@ -29,7 +32,7 @@ This guide will help you set up and run **Whisper** (for transcription) and **Py
 | Section 3 | [Installing and Running Whisper](python_for_asr_tutorial_day3.md) | Installing Whisper, test transcription |
 | Section 4 | [Installing and Running Pyannote](python_for_asr_tutorial_day4.md) | Pyannote setup, Hugging Face token |
 | Section 5 | [Analyzing Pyannote Results](python_for_asr_tutorial_day5.md) | Diarization output, alignment |
-| Section 6 | [Running an Audio File - Full Workflow](python_for_asr_tutorial_day6.md) | Scripts for running complete transcription pipeline. **SEE HERE IF YOU ARE ALREADY COMFORTABLE WITH PYTHON.** |
+| Section 6 | [Running an Audio File - Full Workflow](python_for_asr_tutorial_day6.md) | Scripts for running complete transcription pipeline. **CLICK HERE IF YOU ARE ALREADY COMFORTABLE WITH PYTHON AND THE BASICS.** |
 | Section 7 | [Options and Advanced Skills] | Prep for language analyses and accuracy tools - <span style="color:red">**THIS SECTION STILL IN PROGRESS.**</span> |
 | Section 8 | [Other ASR Models and Tools] | BatchAlign, Otter, SpeechBrain, etc. **THIS SECTION STILL IN PROGRESS.**|
 

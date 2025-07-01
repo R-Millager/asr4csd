@@ -136,7 +136,7 @@ with open("whisper_words.csv", "w", newline="", encoding="utf-8") as f:
 print("✅ Word-level timestamps saved as 'whisper_words.csv'")
 ```
 
-> 📁 **Reminder:** Some of these saved files will be used in Day 5 to align the transcript with speaker diarization from Pyannote.
+> 📁 **Reminder:** Some of these saved files will be used in Step 5 to align the transcript with speaker diarization from Pyannote.
 
 ## **Notes about Whisper performance**
 

@@ -1,6 +1,8 @@
 # **Part 6: Running an Audio File - Full Workflow**
 
-**Why this is important**: Now that you have completed the installations and learned the basics, this step serves as a quick-reference workflow for running Whisper and Pyannote on an interaction audio file. We will add in some additional pipeline details to improve functionality, and allow for multiple consecutive audio files to be processed as a batch. **Additional authorship credit to Isabel Arvelo, M.S., for writing early drafts of portions of this pipeline.**
+**Why this is important**: Now that you have completed the installations and learned the basics, this step serves as a quick-reference workflow for running Whisper and Pyannote on an interaction audio file. We will add in some additional pipeline details to improve functionality, and allow for multiple consecutive audio files to be processed as a batch.
+
+ **Additional authorship credit to Isabel Arvelo, M.S., for writing early drafts of portions of this pipeline.**
 
 *NOTE: If you have already been through this tutorial once and want to directly open the pipeline in Jupyter Notebook, you can go straight there by downloading [this file](pipeline-v1.0.ipynb) and opening it in your working directory. You could also [skip to the middle of this tutorial](#3-run-whisper-and-pyannote) to go right to the pipeline code.*
 
@@ -357,4 +359,4 @@ print(torch.cuda.get_device_name(0))  # Should print your GPU name
 
 You should now have a complete transcript (and diarization labels, if selected) saved to your specified output folder for every audio file that was pre-loaded into your raw audio folder.
 
-If you want to continue learning, we have included a [Step 7](python_for_asr_tutorial_day7.md) to evaluate model accuracy and performance. We also have a bank of tools to utilize for converting .csv files to common speech-language analysis platforms such as SALT and CLAN.
+In the future, we aim to add additional steps to this tutorial for evaluating model accuracy and performance, and branching into other models as well. Stay tuned for more! [Email me](mailto:ryan.a.millager@vanderbilt.edu) with any questions or feedback in the meantime.
