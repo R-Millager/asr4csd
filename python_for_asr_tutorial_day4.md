@@ -24,15 +24,16 @@
 
 ## **2. Install Pyannote**
 
-1. Open **Anaconda Prompt**. In order to navigate some of the privileges required to run Pyannote, you should **open Anaconda Prompt in 'Administrator Mode' by right-clicking Anaconda Prompt prior to opening.**
+1. Open **Anaconda Prompt**. In order to navigate some of the privileges required to run Pyannote, you should **open Anaconda Prompt in 'Administrator Mode' by right-clicking Anaconda Prompt prior to opening.** Administrator mode helps prevent file-permission and caching issues when Pyannote downloads large model files.
 2. Activate your environment:
    ```sh
    conda activate whisper_py
    ```
 3. Install Pyannote. Note that this step can take quite a while when installing for the first time:
    ```sh
-   pip install pyannote.audio
+   pip install pyannote.audio==3.4.0
    ```
+   > This version is pinned to ensure compatibility with the rest of the tutorial and to avoid breaking changes in PyTorch and Hugging Face dependencies.
 
 ---
 
@@ -54,13 +55,14 @@
    ```sh
    set HF_HUB_DISABLE_SYMLINKS_WARNING=1
    ```
->    This disables symlinks for Hugging Face's caching system and avoids related errors.
+>    This disables symbolic-link warnings on Windows. The models will still download and run correctly.
 
 3. Run diarization on an audio file using the following code. Be sure to confirm your working directory and to update the code with accurate *audio file name* and *hugging face token* (from the previous step):
 
    ```sh
    python -c "from pyannote.audio import Pipeline; pipeline = Pipeline.from_pretrained('pyannote/speaker-diarization', use_auth_token='YOUR_TOKEN_HERE'); print(pipeline('test_audio.wav'))"
    ```
+> **NOTE:** Do not share notebooks that contain your access token. Treat it like a password.
 
 4. The output will display timestamps and speaker labels.
 
