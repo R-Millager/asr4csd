@@ -64,7 +64,7 @@ with open("pyannote_output.json", "r") as f:
 
 aligned = []
 
-# Match each Whisper segment to the Pyannote speaker active at its start time
+# Match each Whisper segment to the Pyannote speaker with most speaker overlap
 for segment in whisper_data:
     start = segment["start"]
     end = segment["end"]
@@ -72,10 +72,13 @@ for segment in whisper_data:
 
     # Find speaker label from Pyannote
     speaker = "UNKNOWN"
+    best_overlap = 0.0
+
     for entry in pyannote_data:
-        if entry["start"] <= start < entry["end"]:
+        overlap = max(0.0, min(end, entry["end"]) - max(start, entry["start"]))
+        if overlap > best_overlap:
+            best_overlap = overlap
             speaker = entry["speaker"]
-            break
 
     aligned.append({
         "start_time": start,
@@ -93,15 +96,9 @@ with open("aligned_output.csv", "w", newline="", encoding="utf-8") as f:
 print("✅ Aligned CSV saved as 'aligned_output.csv'")
 ```
 
-3. **Check your output**: The CSV file will contain each word, its time range, assigned speaker, and the spoken text.
+3. **Check your output**: The CSV file will contain each Whisper segment (a chunk of text with start/end time), its time range, assigned speaker, and the spoken text.
 
 > 📁 This aligned CSV will be useful for reviewing your data or preparing it for further analysis in ELAN, CLAN, or other tools for speech-language analysis.
-
-To align Whisper’s transcript with Pyannote’s diarization results:
-
-- Compare **timestamps** between both outputs.
-- Assign speaker labels (`SPEAKER_00`, `SPEAKER_01`, etc.) to each transcript segment.
-- Optionally, save aligned data in a CSV (covered in later sections).
 
 4. **View your output using `pandas`:**
 
@@ -113,7 +110,7 @@ df = pd.read_csv("aligned_output.csv")
 df.head()
 ```
 
-This is a helpful way to verify that speaker labels, timestamps, and transcript segments all aligned correctly.
+This is a helpful way to verify that speaker labels, timestamps, and transcript segments all aligned correctly. If many rows are `UNKNOWN`, confirm that both files came from the same audio file and that Pyannote diarization spans the full recording.
 
 ## **3. Common Issues & Debugging**
 
