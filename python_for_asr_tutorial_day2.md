@@ -25,7 +25,7 @@ conda activate whisper_py
 Copy the following and run in Anaconda prompt:
 
 ```sh
-pip install pandas
+pip install pandas==2.2.2
 ```
 
 ## **3. Install and Launch Jupyter Notebook**
@@ -48,6 +48,9 @@ jupyter notebook
 
 This will open a browser window where you can create and run Python notebooks.
 
+> **About Python kernels:**
+A *kernel* is the Python environment that a Jupyter Notebook uses to run code. If the wrong kernel is selected, your notebook may not have access to the packages you installed (such as Whisper or Pyannote), even though they are correctly installed elsewhere. Be sure to select the kernel associated with your `whisper_py` environment when you are running these tutorial tasks.
+
 ## **4. Practice in Jupyter Notebook**
 
 Create a new notebook and try the following examples.
@@ -63,7 +66,7 @@ Open the new (Untitled) notebook.
 
 Within the new notebook, rename it "test1" (File > Rename). The .ipynb extension will be preserved.
 
-In the blank command prompt of the notebook, copy the following:
+In a new notebook cell, copy the following:
 
 ```python
 import pandas as pd
@@ -115,6 +118,7 @@ print("New working directory:", os.getcwd())
 ```
 
 > ⚠️ Before running this code, be sure you have selected the folder you want. On your machine, you should have a working folder with codes and test audio files for this project.
+> ⚠️ Changing the working directory only affects the current notebook session; you will need to set it again if you restart Jupyter or open a new notebook.
 > ⚠️ Also be sure to *always* use forward slashes (/) rather than backslashes (\) in your directory assignment.
 
 ---

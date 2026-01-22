@@ -20,7 +20,7 @@ From here on out, we will always use **Anaconda Prompt** to run scripts and pack
    ```
 You should see `Python 3.9.25`. If not, stop here and recreate the environment before proceeding.
 >*Why Python 3.9?*
-At the time of writing, this version offers teh best copmatibility with Whisper, Pyannote, and supporting libraries on Windows.
+At the time of writing, this version offers the best compatibility with Whisper, Pyannote, and supporting libraries on Windows.
 
 ## **2. Install FFmpeg (Required for Audio Processing)**
 
