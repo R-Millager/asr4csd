@@ -11,13 +11,16 @@ From here on out, we will always use **Anaconda Prompt** to run scripts and pack
 1. Download and install [Anaconda](https://www.anaconda.com/products/distribution#download-section).
 2. Open **Anaconda Prompt** and create a virtual environment (which we will name `whisper_py`). This virtual environment is an isolated workspace where you can install and run packages like Whisper without affecting other projects or system-wide settings on your device:
    ```sh
-   conda create -n whisper_py python=3.9 -y
+   conda create -n whisper_py python=3.9.25 -y
    conda activate whisper_py
    ```
 3. Ensure your Python version is correct:
    ```sh
    python --version
    ```
+You should see `Python 3.9.25`. If not, stop here and recreate the environment before proceeding.
+>*Why Python 3.9?*
+At the time of writing, this version offers teh best copmatibility with Whisper, Pyannote, and supporting libraries on Windows.
 
 ## **2. Install FFmpeg (Required for Audio Processing)**
 

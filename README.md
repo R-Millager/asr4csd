@@ -1,4 +1,4 @@
-# Step-by-Step Guide: Running Whisper and Pyannote on Windows for Speech-Language Transcription, v. 1.0
+# Step-by-Step Guide: Running Whisper and Pyannote on Windows for Speech-Language Transcription, v. 2.0
 
 ## *By Ryan A. Millager, MS CCC-SLP, Vanderbilt University*
 
@@ -6,12 +6,14 @@
 
 This guide will help you set up and run **Whisper** (for transcription) and **Pyannote** (for speaker diarization) on your Windows 11 device. Since these tools rely on Python and machine learning models, the main focus of this tutorial is to establish the necessary environment configured. Opportunities for additional learning and data science literacy are noted. We will use Anaconda as a user-friendly platform for running Python; although Anaconda is not strictly required for running Python on a PC, we recommend it for beginners. This tutorial was conceived as a cumulative learning process, with manageable goals for each section's topic. However, it is a self-guided tutorial that can be taken at the reader's preferred pace. Please [send me feedback](mailto:ryan.a.millager@vanderbilt.edu) with any errors, concerns, or comments that could improve this tutorial for future users.
 
+*Important note on reproducibility:* This tutorial assumes **specific versions** of Python and key packages. Due to rapid changes in the PyTorch and Hugging Face ecosystems, installing the “latest” versions may result in errors not covered here. Where relevant, exact version numbers are introduced during installation steps and summarized later for reference.
+
 *Note: this tutorial reflects my goals to use transcription/diarization tools for research in communication sciences and disorders, with open-source tools and all analyses conducted on local servers to protect participant confidentiality.*
 
 ### **Prerequisites for This Tutorial**
 
 - Windows 11 PC
-    - *Advanced computing power (e.g., GPU access) is not necessarily required for this tutorial, which was designed with average CPUs in mind. Larger files, or larger Whisper models, may take a long time to process but should not result in crashes.*
+    - *Advanced computing power (e.g., GPU access) is not required for this tutorial.* All examples are designed to run on **CPU-only systems**, prioritizing reproducibility and accessibility over speed.
 - Administrative permissions (and willingness) to install additional tools like Python and Jupyter Notebook
 - A test audio file (.wav format) -- we recommend a recording of just a few minutes (3-5 minutes max) with two speakers and minimal background noise so that you can readily test the tools in this tutorial.
 
