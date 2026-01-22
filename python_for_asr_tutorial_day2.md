@@ -118,7 +118,9 @@ print("New working directory:", os.getcwd())
 ```
 
 > ⚠️ Before running this code, be sure you have selected the folder you want. On your machine, you should have a working folder with codes and test audio files for this project.
+
 > ⚠️ Changing the working directory only affects the current notebook session; you will need to set it again if you restart Jupyter or open a new notebook.
+
 > ⚠️ Also be sure to *always* use forward slashes (/) rather than backslashes (\) in your directory assignment.
 
 ---
