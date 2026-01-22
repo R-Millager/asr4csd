@@ -41,7 +41,7 @@
 
 > ⚠️ **One-time setup steps required:** Before you can run the diarization model, you must manually accept usage terms for two Hugging Face model repositories:
 >
-> 1. Visit [https://huggingface.co/pyannote/speaker-diarization](https://huggingface.co/pyannote/speaker-diarization)
+> 1. Visit [https://huggingface.co/pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1)
 > 2. Click **"Access repository"**
 > 3. Accept the terms and conditions. You will need to enter some personal information (i.e., affiliation, website, data type).
 > 4. Then visit [https://huggingface.co/pyannote/segmentation](https://huggingface.co/pyannote/segmentation)
@@ -51,7 +51,7 @@
 
 1. Ensure your Hugging Face token is stored securely.
 
-2. Run this in your Anaconda Prompt before running the diarization command:
+2. *Optional:* Run this in your Anaconda Prompt before running the diarization command:
    ```sh
    set HF_HUB_DISABLE_SYMLINKS_WARNING=1
    ```
@@ -60,7 +60,7 @@
 3. Run diarization on an audio file using the following code. Be sure to confirm your working directory and to update the code with accurate *audio file name* and *hugging face token* (from the previous step):
 
    ```sh
-   python -c "from pyannote.audio import Pipeline; pipeline = Pipeline.from_pretrained('pyannote/speaker-diarization', use_auth_token='YOUR_TOKEN_HERE'); print(pipeline('test_audio.wav'))"
+   python -c "from pyannote.audio import Pipeline; pipeline = Pipeline.from_pretrained('pyannote/speaker-diarization-3.1', use_auth_token='YOUR_TOKEN_HERE'); print(pipeline('test_audio.wav'))"
    ```
 > **NOTE:** Do not share notebooks that contain your access token. Treat it like a password.
 
@@ -99,7 +99,7 @@ import json
 token = "YOUR_TOKEN_HERE" #<-- PASTE YOUR TOKEN HERE
 audio_file = "test_audio.wav" #<-- INPUT YOUR AUDIO FILENAME HERE
 
-pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization", use_auth_token=token)
+pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization-3.1", use_auth_token=token)
 diarization = pipeline(audio_file)
 
 # Convert results to list of dictionaries
