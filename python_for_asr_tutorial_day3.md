@@ -1,6 +1,6 @@
 # **Part 3: Installing and Running Whisper**
 
-> **Why this is important:** Whisper is the core transcription tool you'll be using. We are using Whisper_Stable, a slightly modified version [shown to have improved timestamp accuracy](https://pypi.org/project/stable-ts/). Installing it properly and verifying that it runs correctly is essential before moving forward. At this stage, we will only aim to get the "base" model of Whisper running on your machine. Later, we will configure Whisper align with data that is timestamped and assigned to speakers. We'll also further explore options for different model sizes and output formats.
+> **A note on Whisper models:** This tutorial uses `stable-ts`, a wrapper around OpenAI's Whisper model that improves timestamp handling. You will interact with Whisper through the `stable_whisper` Python interface, but the underlying transcription model is still Whisper.
 
 ## **1. Install Whisper**
 
@@ -11,8 +11,9 @@
    ```
 3. Install Whisper and dependencies:
    ```sh
-   pip install stable-ts whisper-timestamped
+   pip install stable-ts==2.18.1 whisper-timestamped==1.15.8
    ```
+   >These versions are "pinned" to ensure consistent behavior and avoid breaking changes in future updates.
 4. Verify installation:
    ```sh
    python -c "import stable_whisper; print('Whisper installed successfully!')"
@@ -44,7 +45,7 @@ Replace the example path above with the actual location of your audio files.
    ```sh
    python -c "import stable_whisper; model = stable_whisper.load_model('base.en'); result = model.transcribe('test_audio.wav', word_timestamps=True); print(result.text)"
    ```
-3. The transcript should be displayed in the terminal.
+3. If this command runs without errors and prints text to the terminal, Whisper is installed correctly. If you see an error here, stop and resolve it before continuing—later steps assume Whisper is functioning.
 
 ---
 
@@ -63,7 +64,7 @@ This is easiest to do using **Jupyter Notebook**, which we introduced in the pre
    jupyter notebook
    ```
 
-2. You should see a new browser window open with Jupyter notebook. In the browser window, create a new notebook.
+2. You should see a new browser window open with Jupyter notebook. In the browser window, create a new notebook. Ensure the notebook is using the `whisper_py` kernel; otherwise, Whisper may not be available.
 
 3. Paste and run the following code in a cell:
 
@@ -85,6 +86,8 @@ with open("whisper_output.json", "w") as f:
 
 print("✅ Whisper output saved as 'whisper_output.json'")
 ```
+
+> The `.json` file preserves all metadata produced by Whisper (including timing and segmentation) and serves as the most complete intermediate format.
 
 ---
 
@@ -140,7 +143,7 @@ print("✅ Word-level timestamps saved as 'whisper_words.csv'")
 
 ## **Notes about Whisper performance**
 
-By default, this tutorial uses the `base.en` model, which is a medium-sized model. If you experience slow performance, you can try switching to a smaller model to speed things up. Later on in the tutorial, we will explore options to improve performance with higher computing power and university servers.
+By default, this tutorial uses the `base.en` model, which offers a balance of speed and accuracy for CPU-based systems.
 
 To do this, change the model loading line in your code:
 
