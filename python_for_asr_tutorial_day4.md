@@ -80,7 +80,7 @@ The best way to do this is by using **Jupyter Notebook**.
 
 ### **Steps:**
 
-1. With your working working environment still active, launch Jupyter Notebook:
+1. With your working environment still active, launch Jupyter Notebook:
    ```sh
    jupyter notebook
    ```
