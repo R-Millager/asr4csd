@@ -1,10 +1,10 @@
 # Step-by-Step Guide: Running Whisper and Pyannote on Windows for Speech-Language Transcription, v. 2.0
 
-## *By Ryan A. Millager, MS CCC-SLP, Vanderbilt University*
+## *By Ryan A. Millager, PhD CCC-SLP, Rush University*
 
 ## **Overview**
 
-This guide will help you set up and run **Whisper** (for transcription) and **Pyannote** (for speaker diarization) on your Windows 11 device. Since these tools rely on Python and machine learning models, the main focus of this tutorial is to establish the necessary environment configured. Opportunities for additional learning and data science literacy are noted. We will use Anaconda as a user-friendly platform for running Python; although Anaconda is not strictly required for running Python on a PC, we recommend it for beginners. This tutorial was conceived as a cumulative learning process, with manageable goals for each section's topic. However, it is a self-guided tutorial that can be taken at the reader's preferred pace. Please [send me feedback](mailto:ryan.a.millager@vanderbilt.edu) with any errors, concerns, or comments that could improve this tutorial for future users.
+This guide will help you set up and run **Whisper** (for transcription) and **Pyannote** (for speaker diarization) on your Windows 11 device. Since these tools rely on Python and machine learning models, the main focus of this tutorial is to establish the necessary environment configured. Opportunities for additional learning and data science literacy are noted. We will use Anaconda as a user-friendly platform for running Python; although Anaconda is not strictly required for running Python on a PC, we recommend it for beginners. This tutorial was conceived as a cumulative learning process, with manageable goals for each section's topic. However, it is a self-guided tutorial that can be taken at the reader's preferred pace. Please [send me feedback](mailto:ryan_a_millager@rush.edu) with any errors, concerns, or comments that could improve this tutorial for future users.
 
 *Important note on reproducibility:* This tutorial assumes **specific versions** of Python and key packages. Due to rapid changes in the PyTorch and Hugging Face ecosystems, installing the “latest” versions may result in errors not covered here. Where relevant, exact version numbers are introduced during installation steps and summarized later for reference.
 
@@ -34,7 +34,7 @@ Consider reviewing these free, self-guided resources for orientation to Python. 
 | Section 3 | [Installing and Running Whisper](python_for_asr_tutorial_day3.md) | Installing Whisper, test transcription |
 | Section 4 | [Installing and Running Pyannote](python_for_asr_tutorial_day4.md) | Pyannote setup, Hugging Face token |
 | Section 5 | [Analyzing Pyannote Results](python_for_asr_tutorial_day5.md) | Diarization output, alignment |
-| Section 6 | [Running an Audio File - Full Workflow](python_for_asr_tutorial_day6.md) | Scripts for running complete transcription pipeline. **CLICK HERE IF YOU ARE ALREADY COMFORTABLE WITH PYTHON AND THE BASICS.** |
+| Section 6 | [Running an Audio File - Full Workflow](python_for_asr_tutorial_day6.md) | Scripts for running complete transcription pipeline. **START HERE IF YOU ARE ALREADY COMFORTABLE WITH PYTHON AND THE BASICS.** |
 
 ### Authorship disclosure
 
