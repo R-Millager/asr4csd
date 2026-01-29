@@ -4,7 +4,7 @@
 
 **Additional authorship credit to Isabel Arvelo, M.S., for writing early drafts of portions of this pipeline.**
 
-*Quick start:* If you have already been through this tutorial once and want to directly open the pipeline in Jupyter Notebook, you can go straight there by downloading [this file](pipeline-v1.0.ipynb) and opening it in your working directory. You could also [skip to the middle of this tutorial](#3-run-whisper-and-pyannote) to go right to the pipeline code.*
+*Quick start:* If you have already been through this tutorial once and want to directly open the pipeline in Jupyter Notebook, you can go straight there by downloading [this file](pipeline-v2.0.ipynb) and opening it in your working directory.*
 
 > This pipeline supports **batch-processing** — you can place multiple `.wav` files into the raw audio folder, and all will be processed automatically. Note also that this code will **always expect two speakers**, anticipating evaluation of speaker dyads.
 
